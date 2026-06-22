@@ -1,0 +1,6 @@
+.DS_Store
+.amap-route-cache.json
+__pycache__/
+*.pyc
+node_modules/
+npm-debug.log*
