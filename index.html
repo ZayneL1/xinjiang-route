@@ -1095,41 +1095,15 @@
       return Object.fromEntries(order.map((key) => [key, planDays[currentPlan][key] || commonDays[key]]));
     }
 
-    function gcj02ToWgs84(lon, lat) {
-      const pi = Math.PI;
-      const a = 6378245;
-      const ee = 0.006693421622965943;
-      if (lon < 72.004 || lon > 137.8347 || lat < .8293 || lat > 55.8271) return [lat, lon];
-      function transformLat(x, y) {
-        let value = -100 + 2*x + 3*y + .2*y*y + .1*x*y + .2*Math.sqrt(Math.abs(x));
-        value += (20*Math.sin(6*x*pi) + 20*Math.sin(2*x*pi))*2/3;
-        value += (20*Math.sin(y*pi) + 40*Math.sin(y/3*pi))*2/3;
-        value += (160*Math.sin(y/12*pi) + 320*Math.sin(y*pi/30))*2/3;
-        return value;
-      }
-      function transformLon(x, y) {
-        let value = 300 + x + 2*y + .1*x*x + .1*x*y + .1*Math.sqrt(Math.abs(x));
-        value += (20*Math.sin(6*x*pi) + 20*Math.sin(2*x*pi))*2/3;
-        value += (20*Math.sin(x*pi) + 40*Math.sin(x/3*pi))*2/3;
-        value += (150*Math.sin(x/12*pi) + 300*Math.sin(x/30*pi))*2/3;
-        return value;
-      }
-      let dLat = transformLat(lon - 105, lat - 35);
-      let dLon = transformLon(lon - 105, lat - 35);
-      const radLat = lat / 180 * pi;
-      let magic = Math.sin(radLat);
-      magic = 1 - ee * magic * magic;
-      const sqrtMagic = Math.sqrt(magic);
-      dLat = dLat * 180 / ((a * (1 - ee)) / (magic * sqrtMagic) * pi);
-      dLon = dLon * 180 / (a / sqrtMagic * Math.cos(radLat) * pi);
-      return [lat * 2 - (lat + dLat), lon * 2 - (lon + dLon)];
+    function amapLatLng(lon, lat) {
+      return [lat, lon];
     }
 
     function coordFor(key) {
-      if (key === "nalati") return gcj02ToWgs84(NALATI.lon, NALATI.lat);
-      if (key === "lavender") return gcj02ToWgs84(LAVENDER.lon, LAVENDER.lat);
+      if (key === "nalati") return amapLatLng(NALATI.lon, NALATI.lat);
+      if (key === "lavender") return amapLatLng(LAVENDER.lon, LAVENDER.lat);
       const point = window.AMAP_ROUTE_DATA?.points?.[key];
-      return point ? gcj02ToWgs84(point.lon, point.lat) : null;
+      return point ? amapLatLng(point.lon, point.lat) : null;
     }
 
     function dayPointKeys(day) {
@@ -1148,7 +1122,7 @@
       routeDay.legs.forEach((leg) => {
         const polyline = leg.webRoute?.status === "real-road" ? leg.webRoute.polyline : null;
         const legPoints = polyline?.length
-          ? polyline.map(([lon, lat]) => gcj02ToWgs84(lon, lat))
+          ? polyline.map(([lon, lat]) => amapLatLng(lon, lat))
           : [coordFor(leg.from), coordFor(leg.to)].filter(Boolean);
         if (result.length && legPoints.length) legPoints.shift();
         result.push(...legPoints);
@@ -1158,9 +1132,10 @@
 
     function createBaseMap(elementId, zoomControl) {
       const map = L.map(elementId, { zoomControl, scrollWheelZoom: false, attributionControl: true });
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      L.tileLayer("https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}", {
+        subdomains: ["1", "2", "3", "4"],
         maxZoom: 18,
-        attribution: "&copy; OpenStreetMap"
+        attribution: "&copy; 高德地图"
       }).addTo(map);
       return map;
     }
