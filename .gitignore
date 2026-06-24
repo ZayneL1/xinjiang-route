@@ -3,4 +3,5 @@
 __pycache__/
 *.pyc
 node_modules/
+.xlsx-work/node_modules
 npm-debug.log*

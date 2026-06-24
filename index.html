@@ -2,1032 +2,1118 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="2026年7月新疆伊犁环线9天自驾行程，含路线图、日历行程与可勾选物品清单。">
-  <title>Plan A｜新疆伊犁环线自驾路书</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f6f1">
+  <meta name="description" content="2026年新疆伊犁环线手机自驾路书，包含每日路线、全程总览和行前清单。">
+  <title>新疆伊犁环线自驾路书</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
   <style>
     :root {
       color-scheme: light;
-      --ink: #1c2832;
-      --muted: #66727d;
-      --paper: #f6f2e9;
-      --panel: #fffdf8;
-      --line: #ded5c5;
-      --teal: #167b75;
-      --teal-soft: #e7f3ef;
-      --blue: #3974a8;
-      --green: #5e8247;
-      --amber: #bd7624;
-      --coral: #bf5945;
-      --plum: #765f87;
-      --dark: #22313a;
-      --shadow: 0 16px 42px rgba(34, 49, 58, .1);
+      --bg: #f7f6f1;
+      --surface: #ffffff;
+      --surface-soft: #f0f2ed;
+      --ink: #202823;
+      --muted: #737b75;
+      --line: #e3e5df;
+      --green: #17745f;
+      --green-soft: #e4f1eb;
+      --blue: #3577a6;
+      --coral: #bd5b47;
+      --yellow: #d19a37;
+      --purple: #76658d;
+      --nav-height: 68px;
       --radius: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background: var(--paper);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      line-height: 1.58;
-    }
+    html, body { margin: 0; min-height: 100%; background: #e8e9e4; }
+    body { color: var(--ink); line-height: 1.5; }
     button, input { font: inherit; }
     button { color: inherit; }
-    a { color: inherit; }
-    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    [hidden] { display: none !important; }
 
-    .hero {
-      min-height: 86vh;
-      position: relative;
-      display: grid;
-      align-items: end;
-      overflow: hidden;
-      color: #fff;
-      background:
-        linear-gradient(180deg, rgba(13, 24, 29, .08), rgba(13, 24, 29, .78)),
-        url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=85") center 45% / cover;
+    .app-shell {
+      width: min(100%, 520px);
+      min-height: 100svh;
+      margin: 0 auto;
+      background: var(--bg);
+      box-shadow: 0 0 32px rgba(32, 40, 35, .08);
     }
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: auto 0 0;
-      height: 14vh;
-      background: linear-gradient(180deg, transparent, var(--paper));
-      pointer-events: none;
-    }
-    .hero-content { position: relative; z-index: 1; padding: 110px 0 108px; }
-    .eyebrow { font-size: 14px; font-weight: 800; color: rgba(255,255,255,.9); }
-    h1 {
-      max-width: 900px;
-      margin: 16px 0 18px;
-      font-size: clamp(44px, 8vw, 90px);
-      line-height: 1;
-      letter-spacing: 0;
-    }
-    .lead { max-width: 760px; margin: 0; font-size: clamp(17px, 2vw, 22px); color: rgba(255,255,255,.9); }
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      max-width: 930px;
-      margin-top: 30px;
-    }
-    .stat {
-      min-height: 86px;
-      padding: 15px;
-      border: 1px solid rgba(255,255,255,.28);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.12);
-      backdrop-filter: blur(12px);
-    }
-    .stat b { display: block; font-size: 23px; line-height: 1.1; }
-    .stat span { display: block; margin-top: 6px; font-size: 13px; color: rgba(255,255,255,.78); }
 
-    .nav {
+    .app-header {
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 68px;
+      padding: max(10px, env(safe-area-inset-top)) 16px 10px;
       border-bottom: 1px solid var(--line);
-      background: rgba(246,242,233,.92);
+      background: rgba(247, 246, 241, .96);
       backdrop-filter: blur(16px);
     }
-    .nav-inner {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      overflow-x: auto;
-      padding: 9px 0;
-      scrollbar-width: none;
-    }
-    .nav-inner::-webkit-scrollbar { display: none; }
-    .nav a {
+
+    .brand { min-width: 0; }
+    .brand h1 { margin: 0; font-size: 20px; line-height: 1.2; letter-spacing: 0; }
+    .brand p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+
+    .plan-entry {
       flex: 0 0 auto;
-      padding: 8px 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #fffaf1;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 800;
-    }
-    .nav a:hover { border-color: var(--teal); color: var(--teal); }
-
-    main { padding: 48px 0 76px; }
-    section { margin-bottom: 58px; scroll-margin-top: 76px; }
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      align-items: end;
-      margin-bottom: 20px;
-    }
-    h2 { margin: 0; font-size: clamp(29px, 4vw, 44px); line-height: 1.08; letter-spacing: 0; }
-    .section-head p { max-width: 560px; margin: 0; color: var(--muted); }
-
-    .plan-switch {
-      display: inline-grid;
-      grid-template-columns: repeat(3, minmax(90px, 1fr));
-      gap: 4px;
-      margin-bottom: 22px;
-      padding: 4px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #eee9df;
-    }
-    .plan-switch button {
       min-height: 40px;
-      padding: 7px 13px;
-      border: 0;
-      border-radius: 5px;
-      background: transparent;
-      font-weight: 800;
-      cursor: pointer;
-    }
-    .plan-switch button.active { color: #fff; background: var(--dark); }
-    .plan-panel[hidden] { display: none; }
-    .empty-plan {
-      min-height: 260px;
-      display: grid;
-      place-items: center;
-      padding: 36px;
-      border: 1px dashed #bdb3a3;
-      border-radius: var(--radius);
-      color: var(--muted);
-      background: rgba(255,253,248,.55);
-      text-align: center;
-    }
-    .empty-plan strong { display: block; margin-bottom: 8px; color: var(--ink); font-size: 22px; }
-
-    .route-grid { display: grid; grid-template-columns: 1.35fr .65fr; gap: 18px; }
-    .map-board, .route-notes, .calendar-card, .check-panel, .info-panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-      box-shadow: var(--shadow);
-    }
-    .map-board { position: relative; min-height: 610px; overflow: hidden; padding: 0; background: #dfe8df; }
-    #travelMap { width: 100%; height: 610px; }
-    .static-map-fallback { width: 100%; height: 610px; display: block; object-fit: cover; }
-    .static-map-fallback[hidden] { display: none; }
-    .map-fallback[hidden] { display: none; }
-    .route-map { width: 100%; height: 100%; min-height: 580px; display: block; }
-    .leaflet-container {
-      font-family: inherit;
-      background: #dfe8df;
-    }
-    .leaflet-control-zoom a { color: var(--ink); }
-    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
-      color: var(--ink);
-      background: #fffdf8;
-    }
-    .leaflet-popup-content { margin: 13px 15px; line-height: 1.5; }
-    .leaflet-popup-content b { display: block; margin-bottom: 3px; font-size: 15px; }
-    .leaflet-popup-content span { color: var(--muted); font-size: 12px; }
-    .leaflet-tooltip.route-label {
-      padding: 4px 7px;
-      border: 1px solid rgba(34,49,58,.18);
-      border-radius: 4px;
-      color: var(--ink);
-      background: rgba(255,253,248,.94);
-      box-shadow: 0 4px 12px rgba(34,49,58,.12);
-      font-size: 11px;
-      font-weight: 800;
-    }
-    .map-legend {
-      min-width: 126px;
-      padding: 10px 11px;
-      border: 1px solid rgba(34,49,58,.18);
-      border-radius: 6px;
-      color: var(--ink);
-      background: rgba(255,253,248,.94);
-      box-shadow: 0 6px 18px rgba(34,49,58,.14);
-      font-size: 11px;
-      line-height: 1.5;
-    }
-    .map-legend b { display: block; margin-bottom: 5px; font-size: 12px; }
-    .map-legend button {
-      width: 100%;
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 3px 5px;
-      border: 0;
-      border-radius: 3px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .plan-entry span { color: var(--green); }
+    .plan-entry svg { width: 16px; height: 16px; color: var(--muted); }
+
+    main { padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 18px); }
+    .view { min-height: calc(100svh - 68px - var(--nav-height)); }
+
+    .date-rail {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 12px 14px 10px;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+    }
+    .date-rail::-webkit-scrollbar { display: none; }
+    .date-button {
+      flex: 0 0 54px;
+      min-height: 60px;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 2px;
+      padding: 5px;
+      border: 1px solid transparent;
+      border-radius: 7px;
       background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      scroll-snap-align: center;
+    }
+    .date-button span { font-size: 11px; }
+    .date-button b { font-size: 16px; line-height: 1.1; }
+    .date-button i {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--yellow);
+    }
+    .date-button.active {
+      border-color: #d7ded8;
+      color: #fff;
+      background: var(--green);
+      box-shadow: 0 5px 14px rgba(23, 116, 95, .18);
+    }
+    .date-button.active i { background: #fff; }
+
+    .map-wrap {
+      position: relative;
+      height: 246px;
+      overflow: hidden;
+      border-block: 1px solid var(--line);
+      background: #dfe8df;
+    }
+    #dayMap, #overviewMap { width: 100%; height: 100%; }
+    .map-badge {
+      position: absolute;
+      z-index: 450;
+      left: 14px;
+      bottom: 12px;
+      max-width: calc(100% - 28px);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border: 1px solid rgba(32, 40, 35, .14);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 5px 18px rgba(32, 40, 35, .12);
       font-size: 11px;
+      font-weight: 800;
+    }
+    .map-badge svg { width: 14px; height: 14px; color: var(--green); }
+    .map-node { position: relative; }
+    .map-node-icon {
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff;
+      border-radius: 999px 999px 999px 2px;
+      background: var(--green);
+      box-shadow: 0 4px 12px rgba(32, 40, 35, .26);
+      transform: rotate(-45deg);
+    }
+    .map-node-icon svg {
+      width: 14px;
+      height: 14px;
+      color: #fff;
+      transform: rotate(45deg);
+      stroke-width: 2.5;
+    }
+    .map-node-icon.start { background: #202823; }
+    .map-node-icon.end { background: #bf5a36; }
+    .map-node-icon.stay { background: #24725f; }
+    .map-node-icon.scenic { background: #4b7f9c; }
+    .map-node-label {
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      max-width: 74px;
+      padding: 3px 6px;
+      border: 1px solid rgba(32, 40, 35, .12);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, .96);
+      box-shadow: 0 3px 10px rgba(32, 40, 35, .16);
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+      white-space: nowrap;
+      transform: translate(-50%, 3px);
+    }
+    .map-node.compact .map-node-label { display: none; }
+    .leaflet-control-attribution { font-size: 8px; }
+    .leaflet-control-zoom a { color: var(--ink); }
+
+    .content { padding: 18px 16px 24px; }
+    .section-label {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .day-heading {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .day-heading h2 { margin: 0; font-size: 23px; line-height: 1.28; letter-spacing: 0; }
+    .day-heading .distance {
+      flex: 0 0 auto;
+      padding-top: 4px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      text-align: right;
+    }
+    .day-summary { margin: 8px 0 17px; color: #58605a; font-size: 14px; }
+
+    .route-line { margin: 0; padding: 0; list-style: none; }
+    .route-stop {
+      position: relative;
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 10px;
+      min-height: 48px;
+      padding-bottom: 12px;
+    }
+    .route-stop:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      left: 13px;
+      top: 25px;
+      bottom: -2px;
+      width: 2px;
+      background: #d9ded9;
+    }
+    .stop-icon {
+      position: relative;
+      z-index: 1;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #d9ded9;
+      border-radius: 50%;
+      color: var(--green);
+      background: var(--surface);
+    }
+    .stop-icon svg {
+      width: 14px;
+      height: 14px;
+      color: var(--green);
+      fill: none;
+      stroke: currentColor;
+    }
+    .route-stop b { display: block; padding-top: 2px; font-size: 14px; }
+    .route-stop div > span { display: block; margin-top: 1px; color: var(--muted); font-size: 12px; }
+
+    .stay-row {
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: center;
+      margin-top: 2px;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      background: var(--green-soft);
+    }
+    .stay-row > svg { width: 20px; height: 20px; color: var(--green); }
+    .stay-row small { display: block; color: #5d7268; font-size: 11px; }
+    .stay-row b { display: block; font-size: 14px; }
+    .stay-row .status { color: var(--green); font-size: 11px; font-weight: 800; }
+
+    .action-row { display: grid; grid-template-columns: 1fr 48px; gap: 8px; margin-top: 14px; }
+    .primary-button, .icon-button {
+      min-height: 46px;
+      border: 0;
+      border-radius: 7px;
+      color: #fff;
+      background: var(--ink);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .primary-button { display: flex; align-items: center; justify-content: center; gap: 7px; }
+    .primary-button svg, .icon-button svg { width: 18px; height: 18px; }
+    .icon-button { display: grid; place-items: center; color: var(--ink); background: #e8ebe6; }
+    .next-preview {
+      margin-top: 22px;
+      padding-top: 15px;
+      border-top: 1px solid var(--line);
+    }
+    .next-preview button {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) 22px;
+      gap: 10px;
+      align-items: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
       text-align: left;
       cursor: pointer;
     }
-    .map-legend button:hover, .map-legend button.active { background: #e8eee9; }
-    .map-legend button.muted { opacity: .42; }
-    .map-legend i { width: 18px; height: 4px; display: inline-block; border-radius: 2px; }
-    .amap-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-    .amap-button {
-      display: inline-flex;
-      align-items: center;
-      min-height: 40px;
-      padding: 8px 12px;
-      border: 1px solid var(--teal);
-      border-radius: 5px;
-      color: #fff;
-      background: var(--teal);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 800;
-    }
-    .amap-button[hidden] { display: none; }
-    .amap-meta { color: var(--muted); font-size: 12px; }
-    .route-back { fill: none; stroke: #d8a957; stroke-width: 14; opacity: .25; stroke-linecap: round; stroke-linejoin: round; }
-    .route-main { fill: none; stroke: var(--teal); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
-    .route-node circle { fill: #fffdf8; stroke: var(--teal); stroke-width: 3; }
-    .route-node text { fill: var(--ink); font-size: 15px; font-weight: 800; paint-order: stroke; stroke: #fffdf8; stroke-width: 5px; stroke-linejoin: round; }
-    .route-node .small { fill: var(--muted); font-size: 11px; font-weight: 700; }
-    .route-notes { padding: 22px; display: grid; align-content: start; gap: 18px; }
-    .route-notes h3, .info-panel h3, .check-panel h3 { margin: 0 0 7px; font-size: 19px; }
-    .route-notes p, .info-panel p { margin: 0; color: var(--muted); }
-    .route-summary { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-    .route-summary li { padding-bottom: 10px; border-bottom: 1px solid var(--line); }
-    .route-summary li:last-child { border-bottom: 0; }
-    .route-summary b { display: block; }
-    .route-summary span { color: var(--muted); font-size: 13px; }
-    .alert { padding: 14px; border-left: 5px solid var(--coral); background: #fff5f0; }
-    .alert b { display: block; margin-bottom: 4px; }
+    .next-date { color: var(--muted); font-size: 12px; font-weight: 800; }
+    .next-preview b { display: block; font-size: 14px; }
+    .next-preview span { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; }
+    .next-preview svg { width: 18px; color: var(--muted); }
 
-    .calendar-grid {
+    .overview-header, .simple-header { padding: 18px 16px 14px; }
+    .overview-header h2, .simple-header h2 { margin: 0; font-size: 25px; letter-spacing: 0; }
+    .overview-header p, .simple-header p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
+    .overview-map-wrap { height: 320px; border-block: 1px solid var(--line); }
+    .trip-stats {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .calendar-card { min-height: 260px; overflow: hidden; display: flex; flex-direction: column; }
-    .calendar-top {
-      min-height: 68px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 13px 15px;
+      grid-template-columns: repeat(3, 1fr);
       border-bottom: 1px solid var(--line);
-      background: #f0eee7;
+      background: var(--surface);
     }
-    .calendar-top b { font-size: 25px; line-height: 1; }
-    .calendar-top span { display: block; color: var(--muted); font-size: 12px; font-weight: 700; margin-top: 5px; }
-    .night { flex: 0 0 auto; max-width: 55%; text-align: right; font-size: 12px; font-weight: 800; color: var(--teal); }
-    .calendar-body { padding: 15px; display: flex; flex: 1; flex-direction: column; }
-    .calendar-body h3 { margin: 0; font-size: 18px; line-height: 1.3; }
-    .calendar-body p { margin: 9px 0 12px; color: var(--muted); font-size: 14px; }
-    .metrics { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
-    .metric { padding: 5px 8px; border-radius: 4px; background: var(--teal-soft); color: #155f5a; font-size: 12px; font-weight: 800; }
-    .details-toggle {
+    .trip-stats div { padding: 13px 8px; text-align: center; }
+    .trip-stats div + div { border-left: 1px solid var(--line); }
+    .trip-stats b { display: block; font-size: 17px; }
+    .trip-stats span { color: var(--muted); font-size: 10px; }
+
+    .plan-note {
+      margin: 16px;
+      padding: 12px;
+      border-left: 4px solid var(--yellow);
+      background: #fff7e8;
+      color: #6e552a;
+      font-size: 12px;
+    }
+    .plan-note b { display: block; margin-bottom: 3px; color: #4f3c1f; }
+    .all-days { margin: 0 16px; border-top: 1px solid var(--line); }
+    .day-row {
       width: 100%;
-      min-height: 40px;
-      margin-top: 13px;
-      border: 1px solid var(--line);
-      border-radius: 5px;
-      background: #fff;
-      font-weight: 800;
-      cursor: pointer;
-    }
-    .details-toggle:hover { border-color: var(--teal); color: var(--teal); }
-
-    .day-details {
       display: grid;
-      gap: 12px;
-      margin-top: 20px;
-    }
-    details.day-detail {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-      box-shadow: 0 8px 24px rgba(34,49,58,.07);
-    }
-    details.day-detail summary {
-      display: grid;
-      grid-template-columns: 92px 1fr auto;
+      grid-template-columns: 48px minmax(0, 1fr) 20px;
+      gap: 10px;
       align-items: center;
-      gap: 14px;
       min-height: 76px;
-      padding: 14px 18px;
+      padding: 10px 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      text-align: left;
       cursor: pointer;
-      list-style: none;
     }
-    details.day-detail summary::-webkit-details-marker { display: none; }
-    .summary-date b { display: block; font-size: 20px; }
-    .summary-date span { color: var(--muted); font-size: 12px; font-weight: 700; }
-    .summary-title { font-weight: 800; }
-    .summary-distance { color: var(--teal); font-size: 13px; font-weight: 800; text-align: right; }
-    .detail-content { padding: 0 18px 18px 124px; }
-    .segments { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
-    .segments li {
-      position: relative;
-      padding: 10px 12px 10px 17px;
-      border-left: 3px solid var(--teal);
-      background: #f7f6f1;
-    }
-    .segments b { display: block; }
-    .segments span { display: block; color: var(--muted); font-size: 13px; }
-    .day-note { margin: 13px 0 0; padding: 11px 13px; background: #fff4ea; color: #70451f; font-size: 13px; }
-    .amap-day-summary {
-      margin: 0 0 12px;
-      padding: 10px 12px;
-      border-left: 4px solid var(--blue);
-      background: #eef5fa;
-      color: #31566f;
-      font-size: 13px;
-      font-weight: 800;
-    }
+    .day-row .day-no { color: var(--green); font-size: 12px; font-weight: 900; }
+    .day-row b { display: block; font-size: 14px; }
+    .day-row span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .day-row svg { width: 17px; color: #9ba19d; }
 
-    .check-layout { display: grid; grid-template-columns: 260px 1fr; gap: 18px; align-items: start; }
-    .check-progress { position: sticky; top: 74px; padding: 22px; }
+    .progress-panel {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 15px;
+      align-items: center;
+      margin: 0 16px 16px;
+      padding: 14px;
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 4px 18px rgba(32, 40, 35, .05);
+    }
     .progress-ring {
-      width: 126px;
+      width: 68px;
       aspect-ratio: 1;
       display: grid;
       place-items: center;
-      margin: 10px auto 17px;
       border-radius: 50%;
-      background: conic-gradient(var(--teal) var(--progress, 0%), #e5dfd3 0);
+      background: conic-gradient(var(--green) var(--progress, 0%), #e4e7e2 0);
     }
-    .progress-ring::before { content: ""; width: 94px; aspect-ratio: 1; border-radius: 50%; background: var(--panel); }
-    .progress-text { position: absolute; text-align: center; }
-    .progress-text b { display: block; font-size: 24px; }
-    .progress-text span { color: var(--muted); font-size: 12px; }
-    .check-progress p { color: var(--muted); font-size: 13px; }
-    .reset-button {
-      width: 100%;
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 5px;
-      background: #fff;
-      font-weight: 800;
-      cursor: pointer;
+    .progress-ring::before {
+      content: "";
+      width: 52px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--surface);
     }
-    .check-groups { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
-    .check-panel { padding: 19px; box-shadow: 0 8px 24px rgba(34,49,58,.07); }
-    .check-list { display: grid; gap: 8px; }
+    .progress-ring b { position: absolute; font-size: 14px; }
+    .progress-copy h3 { margin: 0; font-size: 16px; }
+    .progress-copy p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+
+    .check-group { margin: 0 16px 17px; }
+    .check-group h3 { margin: 0 0 5px; color: var(--muted); font-size: 12px; }
+    .check-list { border-block: 1px solid var(--line); }
     .check-item {
+      min-height: 48px;
       display: grid;
-      grid-template-columns: 22px 1fr;
-      gap: 9px;
-      align-items: start;
-      padding: 8px 0;
-      border-bottom: 1px solid #eee8dc;
+      grid-template-columns: 25px minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
       cursor: pointer;
     }
     .check-item:last-child { border-bottom: 0; }
-    .check-item input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--teal); }
+    .check-item input { width: 19px; height: 19px; margin: 0; accent-color: var(--green); }
     .check-item span { font-size: 14px; }
-    .check-item input:checked + span { color: #8a918e; text-decoration: line-through; }
-
-    .info-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
-    .info-panel { padding: 20px; }
-    .info-panel ul { margin: 9px 0 0; padding-left: 19px; color: #3a4650; }
-    .info-panel li { margin: 7px 0; }
-    .status { display: inline-block; margin-bottom: 10px; padding: 4px 8px; border-radius: 4px; color: #fff; background: var(--green); font-size: 12px; font-weight: 800; }
-    .status.pending { background: var(--amber); }
-
-    footer { padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
-
-    @media (max-width: 940px) {
-      .route-grid, .check-layout { grid-template-columns: 1fr; }
-      .calendar-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .check-progress { position: static; }
-      .info-grid { grid-template-columns: 1fr; }
+    .check-item input:checked + span { color: #9aa09c; text-decoration: line-through; }
+    .reset-button {
+      width: calc(100% - 32px);
+      min-height: 44px;
+      margin: 2px 16px 24px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--coral);
+      background: var(--surface);
+      font-weight: 800;
+      cursor: pointer;
     }
-    @media (max-width: 680px) {
-      body { line-height: 1.52; }
-      .wrap { width: min(100% - 24px, 1180px); }
-      .hero {
-        min-height: 78svh;
-        background-position: 58% center;
-      }
-      .hero::after { height: 10vh; }
-      .hero-content { padding: 72px 0 68px; }
-      .eyebrow { font-size: 12px; }
-      h1 {
-        max-width: 330px;
-        margin: 12px 0 14px;
-        font-size: 39px;
-        line-height: 1.06;
-      }
-      .lead { max-width: 345px; font-size: 16px; line-height: 1.58; }
-      .hero-stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-        margin-top: 22px;
-      }
-      .stat { min-height: 78px; padding: 12px; }
-      .stat b { font-size: 20px; }
-      .stat span { font-size: 11px; line-height: 1.4; }
-      .nav-inner {
-        width: 100%;
-        gap: 7px;
-        padding: 8px 0;
-        scroll-snap-type: x proximity;
-      }
-      .nav a {
-        min-height: 42px;
-        display: inline-flex;
-        align-items: center;
-        padding: 8px 13px;
-        scroll-snap-align: start;
-      }
-      main { padding: 34px 0 58px; }
-      section { margin-bottom: 44px; scroll-margin-top: 68px; }
-      h2 { font-size: 29px; line-height: 1.12; }
-      .section-head { display: block; }
-      .section-head p { margin-top: 9px; font-size: 14px; }
-      .plan-switch { width: 100%; margin-bottom: 16px; }
-      .plan-switch button { min-width: 0; min-height: 44px; padding: 7px 8px; }
-      .empty-plan { min-height: 210px; padding: 24px 18px; }
-      .info-panel, .route-notes, .check-panel { padding: 17px; }
-      .map-board { min-height: 480px; }
-      #travelMap, .static-map-fallback { height: 480px; }
-      .route-map { width: 680px; min-height: 500px; }
-      .leaflet-tooltip.route-label { display: none; }
-      .leaflet-control-layers { display: none; }
-      .leaflet-control-zoom a {
-        width: 38px;
-        height: 38px;
-        line-height: 38px;
-      }
-      .map-legend {
-        width: calc(100vw - 54px);
-        min-width: 0;
-        display: flex;
-        gap: 5px;
-        align-items: center;
-        overflow-x: auto;
-        padding: 7px;
-        scrollbar-width: none;
-      }
-      .map-legend::-webkit-scrollbar { display: none; }
-      .map-legend b { display: none; }
-      .map-legend button {
-        width: auto;
-        min-width: 47px;
-        min-height: 36px;
-        flex: 0 0 auto;
-        justify-content: center;
-        padding: 5px 8px;
-        font-size: 11px;
-      }
-      .map-legend button[data-map-day="all"] { min-width: 70px; }
-      .map-legend i { width: 14px; }
-      .route-notes { gap: 15px; }
-      .route-summary span { font-size: 12px; }
-      .calendar-grid, .check-groups { grid-template-columns: 1fr; }
-      .calendar-card { min-height: 0; }
-      .calendar-top { min-height: 64px; padding: 12px 14px; }
-      .calendar-top b { font-size: 23px; }
-      .night { max-width: 52%; }
-      .calendar-body { padding: 14px; }
-      .details-toggle, .reset-button, .amap-button { min-height: 44px; }
-      details.day-detail summary {
-        grid-template-columns: 64px minmax(0, 1fr);
-        gap: 10px;
-        min-height: 72px;
-        padding: 13px 14px;
-      }
-      .summary-title { min-width: 0; font-size: 14px; overflow-wrap: anywhere; }
-      .summary-distance { grid-column: 2; text-align: left; }
-      .detail-content { padding: 0 14px 15px; }
-      .segments { gap: 7px; }
-      .segments li { padding: 9px 10px 9px 13px; }
-      .segments b { font-size: 14px; }
-      .segments span, .day-note, .amap-day-summary { font-size: 12px; }
-      .check-layout { gap: 13px; }
-      .check-progress {
-        display: grid;
-        grid-template-columns: 100px 1fr;
-        gap: 8px 14px;
-        align-items: center;
-      }
-      .check-progress h3 { grid-column: 1 / -1; }
-      .progress-ring { width: 94px; margin: 0; grid-row: 2 / 4; }
-      .progress-ring::before { width: 70px; }
-      .progress-text b { font-size: 20px; }
-      .check-progress p { margin: 0; }
-      .reset-button { grid-column: 2; }
-      .check-item {
-        grid-template-columns: 25px 1fr;
-        min-height: 44px;
-        align-items: center;
-        padding: 8px 0;
-      }
-      .check-item input { width: 20px; height: 20px; margin: 0; }
-      footer { padding: 24px 0 36px; }
+
+    .notice-list { margin: 0 16px; border-top: 1px solid var(--line); }
+    .notice-row {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
     }
+    .notice-row > svg { width: 20px; height: 20px; margin-top: 2px; color: var(--green); }
+    .notice-row b { display: block; font-size: 14px; }
+    .notice-row p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 700;
+      left: 50%;
+      bottom: 0;
+      width: min(100%, 520px);
+      min-height: calc(var(--nav-height) + env(safe-area-inset-bottom));
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 6px 5px env(safe-area-inset-bottom);
+      border-top: 1px solid var(--line);
+      background: rgba(255, 255, 255, .97);
+      backdrop-filter: blur(18px);
+      transform: translateX(-50%);
+    }
+    .nav-button {
+      min-height: 56px;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 2px;
+      border: 0;
+      background: transparent;
+      color: #818883;
+      font-size: 10px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .nav-button svg { width: 21px; height: 21px; }
+    .nav-button.active { color: var(--green); }
+
+    .sheet-backdrop {
+      position: fixed;
+      z-index: 1200;
+      inset: 0;
+      background: rgba(20, 25, 22, .42);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+    .detail-sheet {
+      position: fixed;
+      z-index: 1210;
+      left: 50%;
+      bottom: 0;
+      width: min(100%, 520px);
+      max-height: 88svh;
+      overflow-y: auto;
+      padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
+      border-radius: 8px 8px 0 0;
+      background: var(--surface);
+      box-shadow: 0 -14px 36px rgba(20, 25, 22, .18);
+      transform: translate(-50%, 105%);
+      transition: transform .25s ease;
+    }
+    .detail-sheet.open { transform: translate(-50%, 0); }
+    .sheet-handle { width: 38px; height: 4px; margin: 0 auto 10px; border-radius: 2px; background: #d8dcd8; }
+    .sheet-top { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+    .sheet-top h2 { margin: 0; font-size: 23px; line-height: 1.3; }
+    .sheet-top p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .close-button {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: #eef0ec;
+      cursor: pointer;
+    }
+    .close-button svg { width: 19px; }
+    .detail-metrics { display: flex; gap: 7px; flex-wrap: wrap; margin: 15px 0; }
+    .detail-metrics span {
+      padding: 5px 8px;
+      border-radius: 5px;
+      color: #3f5e51;
+      background: var(--green-soft);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .segment-list { margin: 0; padding: 0; list-style: none; }
+    .segment-list li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .segment-list b { display: block; font-size: 14px; }
+    .segment-list span { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
+    .detail-note { margin: 14px 0 0; padding: 11px; background: #fff5e7; color: #6e552a; font-size: 12px; }
+
+    .plan-overlay {
+      position: fixed;
+      z-index: 1300;
+      inset: 0;
+      overflow-y: auto;
+      padding: max(20px, env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));
+      background: var(--bg);
+    }
+    .plan-overlay-inner { width: min(100%, 488px); margin: 0 auto; }
+    .plan-overlay-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 22px;
+    }
+    .plan-overlay-top h2 { margin: 0; font-size: 27px; letter-spacing: 0; }
+    .plan-overlay-top p { max-width: 330px; margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+    .plan-close {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: #e9ebe7;
+      cursor: pointer;
+    }
+    .plan-close svg { width: 19px; }
+    .plan-options { display: grid; gap: 12px; }
+    .plan-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 5px 18px rgba(32, 40, 35, .05);
+    }
+    .plan-card.selected { border-color: var(--green); box-shadow: 0 0 0 2px var(--green-soft); }
+    .plan-card-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+    .plan-card h3 { margin: 0; font-size: 18px; }
+    .plan-card .tag {
+      flex: 0 0 auto;
+      padding: 4px 7px;
+      border-radius: 4px;
+      color: var(--green);
+      background: var(--green-soft);
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .plan-card .tag.pending { color: #76591f; background: #fff0ce; }
+    .plan-card > p { margin: 6px 0 12px; color: var(--muted); font-size: 13px; }
+    .plan-facts { margin: 0 0 14px; padding: 0; list-style: none; }
+    .plan-facts li {
+      display: grid;
+      grid-template-columns: 68px minmax(0, 1fr);
+      gap: 8px;
+      padding: 7px 0;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+    }
+    .plan-facts b { color: var(--muted); }
+    .select-plan {
+      width: 100%;
+      min-height: 44px;
+      border: 0;
+      border-radius: 7px;
+      color: #fff;
+      background: var(--ink);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .select-plan.current { color: var(--green); background: var(--green-soft); }
+    .select-plan:disabled { color: #8b918d; background: #e9ebe7; cursor: not-allowed; }
+    .plan-footnote { margin: 16px 2px 0; color: var(--muted); font-size: 11px; }
 
     @media (max-width: 360px) {
-      h1 { font-size: 35px; }
-      .hero-content { padding-top: 62px; }
-      .stat { padding: 10px; }
-      .stat b { font-size: 18px; }
-      .night { max-width: 48%; font-size: 11px; }
-      #travelMap, .static-map-fallback { height: 450px; }
+      .app-header { padding-inline: 12px; }
+      .brand h1 { font-size: 18px; }
+      .plan-entry { padding-inline: 7px; }
+      .content, .overview-header, .simple-header { padding-inline: 13px; }
+      .day-heading h2 { font-size: 21px; }
+    }
+
+    @media (min-width: 521px) {
+      .app-shell { min-height: 100vh; }
     }
   </style>
 </head>
 <body>
-  <header class="hero" id="top">
-    <div class="wrap hero-content">
-      <div class="eyebrow">PLAN A · 2026.07.11 - 07.19 · 乌鲁木齐往返</div>
-      <h1>新疆伊犁环线自驾路书</h1>
-      <p class="lead">从 S101 百里丹霞进入独库北段，经孟克特、库尔德宁、喀拉峻、夏塔与赛里木湖，用九天完成一条有取舍、可执行的伊犁环线。</p>
-      <div class="hero-stats" aria-label="行程数据">
-        <div class="stat"><b>9 天</b><span>7月11日至19日</span></div>
-        <div class="stat"><b>约 2,200 km</b><span>高德主线约2,076km，另含景区内部</span></div>
-        <div class="stat"><b>8 个住宿点</b><span>乌鲁木齐至精河</span></div>
-        <div class="stat"><b>3 条景观公路</b><span>S101、独库北段与伊昭公路</span></div>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <h1>伊犁环线路书</h1>
+        <p>2026.07.11 - 07.19 · 乌鲁木齐往返</p>
       </div>
+      <button class="plan-entry" type="button" id="openPlans">
+        当前：<span id="currentPlanLabel">Plan A</span><i data-lucide="chevron-right"></i>
+      </button>
+    </header>
+
+    <main>
+      <section class="view" id="todayView" data-view="today">
+        <div class="date-rail" id="dateRail" aria-label="选择行程日期"></div>
+        <div class="map-wrap">
+          <div id="dayMap" aria-label="当天行程路线地图"></div>
+          <div class="map-badge"><i data-lucide="route"></i><span id="mapBadge">当天路线</span></div>
+        </div>
+        <div class="content">
+          <p class="section-label" id="todayLabel">今日行程</p>
+          <div class="day-heading">
+            <h2 id="dayTitle"></h2>
+            <div class="distance" id="dayDistance"></div>
+          </div>
+          <p class="day-summary" id="daySummary"></p>
+          <ol class="route-line" id="routeStops"></ol>
+          <div class="stay-row">
+            <i data-lucide="bed-double"></i>
+            <div><small>今晚住宿</small><b id="stayName"></b></div>
+            <span class="status" id="stayStatus"></span>
+          </div>
+          <div class="action-row">
+            <button class="primary-button" type="button" id="openDetail">
+              <i data-lucide="list"></i>查看详细安排
+            </button>
+            <button class="icon-button" type="button" id="openAmap" aria-label="在高德地图打开">
+              <i data-lucide="navigation"></i>
+            </button>
+          </div>
+          <div class="next-preview" id="nextPreview"></div>
+        </div>
+      </section>
+
+      <section class="view" id="tripView" data-view="trip" hidden>
+        <div class="overview-header">
+          <h2>全程总览</h2>
+          <p id="overviewSubtitle">九天完成伊犁环线，路线与住宿一屏掌握。</p>
+        </div>
+        <div class="overview-map-wrap"><div id="overviewMap" aria-label="伊犁环线全程路线地图"></div></div>
+        <div class="trip-stats">
+          <div><b>9 天</b><span>7月11日至19日</span></div>
+          <div><b>约 2,200 km</b><span>含景区内部</span></div>
+          <div><b>3 条</b><span>核心景观公路</span></div>
+        </div>
+        <div class="plan-note" id="planNote"></div>
+        <div class="all-days" id="allDays"></div>
+      </section>
+
+      <section class="view" id="packingView" data-view="packing" hidden>
+        <div class="simple-header">
+          <h2>行前清单</h2>
+          <p>勾选记录保存在当前手机浏览器中。</p>
+        </div>
+        <div class="progress-panel">
+          <div class="progress-ring" id="progressRing"><b id="progressNumber">0%</b></div>
+          <div class="progress-copy"><h3>准备进度</h3><p id="progressHint">先确认身份材料、预约与车辆。</p></div>
+        </div>
+        <div id="checklist"></div>
+        <button class="reset-button" type="button" id="resetChecklist">清空全部勾选</button>
+      </section>
+
+    </main>
+
+    <nav class="bottom-nav" aria-label="主要功能">
+      <button class="nav-button active" type="button" data-nav="today"><i data-lucide="calendar-days"></i><span>今日</span></button>
+      <button class="nav-button" type="button" data-nav="trip"><i data-lucide="map"></i><span>全程</span></button>
+      <button class="nav-button" type="button" data-nav="packing"><i data-lucide="list-checks"></i><span>清单</span></button>
+    </nav>
+  </div>
+
+  <section class="plan-overlay" id="planOverlay" aria-modal="true" aria-label="选择行程方案" hidden>
+    <div class="plan-overlay-inner">
+      <div class="plan-overlay-top">
+        <div>
+          <h2>选择行程方案</h2>
+          <p>方案只会改变“今日”和“全程”的路线与住宿，行前清单始终保持一致。</p>
+        </div>
+        <button class="plan-close" type="button" id="closePlans" aria-label="关闭方案选择"><i data-lucide="x"></i></button>
+      </div>
+      <div class="plan-options">
+        <article class="plan-card" data-plan-card="a">
+          <div class="plan-card-head"><h3>Plan A｜库尔德宁线</h3><span class="tag">常规方案</span></div>
+          <p>未约到那拉提自驾票时采用，路线衔接更顺，D5驾驶压力相对较小。</p>
+          <ul class="plan-facts">
+            <li><b>启用条件</b><span>未约到7月14日那拉提自驾票</span></li>
+            <li><b>D4</b><span>新源 → 库尔德宁，住景区附近</span></li>
+            <li><b>D5</b><span>库尔德宁 → 喀拉峻 → 特克斯</span></li>
+            <li><b>主要特点</b><span>保留库尔德宁，转场相对顺畅</span></li>
+          </ul>
+          <button class="select-plan" type="button" data-select-plan="a">选择 Plan A</button>
+        </article>
+        <article class="plan-card" data-plan-card="b">
+          <div class="plan-card-head"><h3>Plan B｜那拉提线</h3><span class="tag">预约分支</span></div>
+          <p>成功预约那拉提自驾票后采用，用那拉提替换库尔德宁，草原体验更集中。</p>
+          <ul class="plan-facts">
+            <li><b>启用条件</b><span>约到7月14日那拉提自驾票</span></li>
+            <li><b>D4</b><span>新源 → 那拉提，优先住那拉提镇</span></li>
+            <li><b>D5</b><span>那拉提 → 喀拉峻 → 特克斯</span></li>
+            <li><b>主要特点</b><span>D5约267公里转场，驾驶强度更高</span></li>
+          </ul>
+          <button class="select-plan" type="button" data-select-plan="b">选择 Plan B</button>
+        </article>
+        <article class="plan-card" data-plan-card="c">
+          <div class="plan-card-head"><h3>Plan C｜独库封路反走线</h3><span class="tag pending">应急方案</span></div>
+          <p>7月13日独库北段封路时采用，D2直接住精河，先走赛里木湖，再从伊犁河谷反向回奎屯。</p>
+          <ul class="plan-facts">
+            <li><b>启用条件</b><span>7月13日独库北段封路，无法从奎屯穿越乔尔玛</span></li>
+            <li><b>D2-D4</b><span>乌鲁木齐 → 精河 → 赛里木湖 → 伊宁</span></li>
+            <li><b>D5-D7</b><span>伊宁 → 昭苏夏塔 → 特克斯喀拉峻 → 那拉提</span></li>
+            <li><b>D8-D9</b><span>那拉提上午游览，下午经独库方向返奎屯，再回乌鲁木齐</span></li>
+          </ul>
+          <button class="select-plan" type="button" data-select-plan="c">选择 Plan C</button>
+        </article>
+      </div>
+      <p class="plan-footnote">选择结果会保存在当前浏览器中。之后点击页面顶部的“当前方案”即可随时切换。</p>
     </div>
-  </header>
+  </section>
 
-  <nav class="nav" aria-label="页面导航">
-    <div class="wrap nav-inner">
-      <a href="#plans">方案</a>
-      <a href="#route">路线图</a>
-      <a href="#calendar">日历行程</a>
-      <a href="#details">分段路书</a>
-      <a href="#packing">必带清单</a>
-      <a href="#alerts">关键提醒</a>
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <aside class="detail-sheet" id="detailSheet" aria-modal="true" aria-label="每日详细行程">
+    <div class="sheet-handle"></div>
+    <div class="sheet-top">
+      <div><h2 id="detailTitle"></h2><p id="detailSubtitle"></p></div>
+      <button class="close-button" type="button" id="closeDetail" aria-label="关闭详情"><i data-lucide="x"></i></button>
     </div>
-  </nav>
-
-  <main class="wrap">
-    <section id="plans">
-      <div class="section-head">
-        <h2>路线方案</h2>
-        <p>Plan A 为独库与伊昭正常开放时的主路线。Plan B、C 已预留独立入口，后续可直接填入封路绕行或天气调整方案。</p>
-      </div>
-      <div class="plan-switch" role="tablist" aria-label="路线方案">
-        <button class="active" role="tab" aria-selected="true" data-plan="a">Plan A</button>
-        <button role="tab" aria-selected="false" data-plan="b">Plan B</button>
-        <button role="tab" aria-selected="false" data-plan="c">Plan C</button>
-      </div>
-      <div class="plan-panel" data-panel="a">
-        <div class="info-grid">
-          <article class="info-panel">
-            <span class="status">当前主方案</span>
-            <h3>独库北段正常开放</h3>
-            <p>7月13日从奎屯进入独库，经乔尔玛转唐布拉、孟克特，夜宿新源。</p>
-          </article>
-          <article class="info-panel">
-            <span class="status">核心住宿已定</span>
-            <h3>乌鲁木齐前两晚</h3>
-            <p>如家NEO酒店（乌鲁木齐黄河路中医院和田二街店）。</p>
-          </article>
-          <article class="info-panel">
-            <span class="status pending">关键依赖</span>
-            <h3>道路与预约</h3>
-            <p>独库公路预约成功、伊昭公路开放、孟克特及夏塔正常接待。</p>
-          </article>
-        </div>
-      </div>
-      <div class="plan-panel" data-panel="b" hidden>
-        <div class="empty-plan"><div><strong>Plan B · 独库封路绕行</strong>已预留路线图、日历和住宿结构。确认绕行方向后补充。</div></div>
-      </div>
-      <div class="plan-panel" data-panel="c" hidden>
-        <div class="empty-plan"><div><strong>Plan C · 极端天气 / 大范围调整</strong>已预留独立方案位置，可用于伊昭封闭或连续降雨时的保守路线。</div></div>
-      </div>
-    </section>
-
-    <section id="route">
-      <div class="section-head">
-        <h2>Plan A 路线图</h2>
-        <p>节点按高德真实经纬度定位，节点间连线表示行程顺序，不代表道路实际弯曲轨迹。山路时间以当天导航和交通管制为准。</p>
-      </div>
-      <div class="route-grid">
-        <div class="map-board">
-          <div id="travelMap" aria-label="新疆伊犁环线交互地图"></div>
-          <img class="static-map-fallback" id="staticMapFallback" src="amap-static-route.png" alt="高德静态地图生成的新疆伊犁环线路线总览" hidden>
-          <svg class="route-map map-fallback" id="routeMap" viewBox="0 0 820 600" role="img" aria-label="新疆伊犁环线Plan A路线示意图" hidden>
-            <rect width="820" height="600" fill="#fffaf1"></rect>
-            <path d="M88 94 C198 38 320 62 414 96 C536 140 690 116 748 208 C800 290 724 400 650 468 C566 546 422 558 306 520 C180 480 116 392 86 294 C60 210 36 134 88 94Z" fill="#eef2e5"></path>
-            <path class="route-back" d="M105 105 L206 164 L258 246 L356 306 L440 358 L554 398 L652 442 L714 338 L650 234 L520 176 L406 124 L300 92 L105 105"></path>
-            <path class="route-main" d="M105 105 L206 164 L258 246 L356 306 L440 358 L554 398 L652 442 L714 338 L650 234 L520 176 L406 124 L300 92 L105 105"></path>
-
-            <g class="route-node" transform="translate(105 105)"><circle r="12"></circle><text x="18" y="-5">乌鲁木齐</text><text class="small" x="18" y="13">D0-D2 / D9</text></g>
-            <g class="route-node" transform="translate(206 164)"><circle r="12"></circle><text x="18" y="-5">奎屯</text><text class="small" x="18" y="13">D2 住宿</text></g>
-            <g class="route-node" transform="translate(258 246)"><circle r="12"></circle><text x="-110" y="-15">独库 · 乔尔玛</text><text class="small" x="-86" y="4">D3</text></g>
-            <g class="route-node" transform="translate(356 306)"><circle r="12"></circle><text x="-82" y="28">孟克特</text><text class="small" x="-65" y="44">唐布拉</text></g>
-            <g class="route-node" transform="translate(440 358)"><circle r="12"></circle><text x="-76" y="30">新源</text><text class="small" x="-78" y="46">D3 住宿</text></g>
-            <g class="route-node" transform="translate(554 398)"><circle r="12"></circle><text x="18" y="-5">库尔德宁</text><text class="small" x="18" y="13">D4 住宿</text></g>
-            <g class="route-node" transform="translate(652 442)"><circle r="12"></circle><text x="-100" y="32">喀拉峻 / 特克斯</text><text class="small" x="-52" y="48">D5</text></g>
-            <g class="route-node" transform="translate(714 338)"><circle r="12"></circle><text x="-72" y="-18">夏塔</text><text class="small" x="-84" y="1">D6</text></g>
-            <g class="route-node" transform="translate(650 234)"><circle r="12"></circle><text x="18" y="-5">昭苏</text><text class="small" x="18" y="13">D6 住宿</text></g>
-            <g class="route-node" transform="translate(520 176)"><circle r="12"></circle><text x="18" y="-5">伊宁</text><text class="small" x="18" y="13">D7 住宿</text></g>
-            <g class="route-node" transform="translate(406 124)"><circle r="12"></circle><text x="18" y="-5">赛里木湖</text><text class="small" x="18" y="13">D8 环湖</text></g>
-            <g class="route-node" transform="translate(300 92)"><circle r="12"></circle><text x="-54" y="-20">精河</text><text class="small" x="-68" y="-4">D8 住宿</text></g>
-          </svg>
-        </div>
-        <aside class="route-notes">
-          <div>
-            <h3>路线顺序</h3>
-            <ul class="route-summary">
-              <li><b>D2 丹霞峡谷</b><span>乌鲁木齐 → 百里丹霞 → 安集海 → 奎屯</span></li>
-              <li><b>D3 公路高光</b><span>独库北段 → 乔尔玛 → 唐布拉 → 孟克特 → 新源</span></li>
-              <li><b>D4-D6 草原雪山</b><span>库尔德宁 → 喀拉峻 → 特克斯 → 夏塔 → 昭苏</span></li>
-              <li><b>D7-D9 收束返程</b><span>伊昭 → 伊宁 → 赛里木湖 → 精河 → 乌鲁木齐</span></li>
-            </ul>
-          </div>
-          <div class="alert">
-            <b>D3 是全程压力点</b>
-            高德主线约314公里、纯驾驶约6.5小时，但还要叠加独库停车和孟克特游览。17:00仍未离开孟克特，应考虑就近住宿。
-          </div>
-          <div>
-            <h3>Plan A 触发条件</h3>
-            <p>7月13日独库北段开放且预约成功；7月17日伊昭公路正常开放。任何封闭都切换备用方案。</p>
-          </div>
-          <div>
-            <h3>高德路线数据</h3>
-            <p id="amapStatus">当前显示内置规划数据。</p>
-            <div class="amap-actions">
-              <a class="amap-button" id="amapOpenLink" href="#" hidden>在高德地图打开完整行程</a>
-            </div>
-            <div class="amap-meta" id="amapGenerated"></div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section id="calendar">
-      <div class="section-head">
-        <h2>日历式每日行程</h2>
-        <p>每张卡片对应一个旅行日。点击“查看分段”可快速跳到当天的公里数、驾驶时间和关键节点。</p>
-      </div>
-      <div class="calendar-grid">
-        <article class="calendar-card">
-          <div class="calendar-top"><div><b>7/11</b><span>周六 · Day 0/1</span></div><div class="night">住：如家NEO（已订）</div></div>
-          <div class="calendar-body"><h3>凌晨落地 · 博物馆 · 国际大巴扎</h3><p>夜宵后补觉，午前参观自治区博物馆，傍晚逛大巴扎与和田二街。</p><div class="metrics"><span class="metric">市区日</span><span class="metric">不取车</span></div><button class="details-toggle" data-target="detail-d1">查看分段</button></div>
-        </article>
-        <article class="calendar-card">
-          <div class="calendar-top"><div><b>7/12</b><span>周日 · Day 2</span></div><div class="night">住：奎屯</div></div>
-          <div class="calendar-body"><h3>百里丹霞 · 安集海</h3><p>取车进入S101，肯斯瓦特按时间选择，傍晚经安集海前往奎屯。</p><div class="metrics"><span class="metric">430-510 km</span><span class="metric">8-9 h驾驶</span></div><button class="details-toggle" data-target="detail-d2">查看分段</button></div>
-        </article>
-        <article class="calendar-card">
-          <div class="calendar-top"><div><b>7/13</b><span>周一 · Day 3</span></div><div class="night">住：新源</div></div>
-          <div class="calendar-body"><h3>独库北段 · 唐布拉 · 孟克特</h3><p>全天强度最高，早进独库，经乔尔玛深入孟克特，晚间到新源。</p><div class="metrics"><span class="metric">430-480 km</span><span class="metric">10-12 h驾驶</span></div><button class="details-toggle" data-target="detail-d3">查看分段</button></div>
-        </article>
-        <article class="calendar-card">
-          <div class="calendar-top"><div><b>7/14</b><span>周二 · Day 4</span></div><div class="night">住：库尔德宁</div></div>
-          <div class="calendar-body"><h3>新源 · 库尔德宁</h3><p>上午经巩留转场，下午游雪岭云杉、山谷草甸与河谷森林。</p><div class="metrics"><span class="metric">150-180 km</span><span class="metric">3-4 h驾驶</span></div><button class="details-toggle" data-target="detail-d4">查看分段</button></div>
-        </article>
-        <article class="calendar-card">
-          <div class="calendar-top"><div><b>7/15</b><span>周三 · Day 5</span></div><div class="night">住：特克斯</div></div>
-          <div class="calendar-body"><h3>喀拉峻 · 特克斯</h3><p>从库尔德宁前往喀拉峻，半日走东西喀拉峻草原线，晚上进八卦城。</p><div class="metrics"><span class="metric">210-260 km</span><span class="metric">4.5-5.5 h</span></div><button class="details-toggle" data-target="detail-d5">查看分段</button></div>
-        </article>
-        <article class="calendar-card">
-          <div class="calendar-top"><div><b>7/16</b><span>周四 · Day 6</span></div><div class="night">住：昭苏</div></div>
-          <div class="calendar-body"><h3>特克斯 · 夏塔</h3><p>早上从特克斯直接出发，午前进入夏塔，留足时间游览雪山古道，傍晚返回昭苏。</p><div class="metrics"><span class="metric">250-280 km</span><span class="metric">4.5-5.5 h</span></div><button class="details-toggle" data-target="detail-d6">查看分段</button></div>
-        </article>
-        <article class="calendar-card">
-          <div class="calendar-top"><div><b>7/17</b><span>周五 · Day 7</span></div><div class="night">住：伊宁</div></div>
-          <div class="calendar-body"><h3>伊昭公路 · 伊宁</h3><p>从昭苏翻越伊昭公路，下午逛喀赞其，傍晚在六星街吃饭。</p><div class="metrics"><span class="metric">150-180 km</span><span class="metric">3.5-4.5 h</span></div><button class="details-toggle" data-target="detail-d7">查看分段</button></div>
-        </article>
-        <article class="calendar-card">
-          <div class="calendar-top"><div><b>7/18</b><span>周六 · Day 8</span></div><div class="night">住：精河</div></div>
-          <div class="calendar-body"><h3>果子沟 · 赛里木湖环湖</h3><p>早离伊宁，经果子沟进入赛湖，完成环湖后18点前驶向精河。</p><div class="metrics"><span class="metric">360-400 km</span><span class="metric">5-6 h驾驶</span></div><button class="details-toggle" data-target="detail-d8">查看分段</button></div>
-        </article>
-        <article class="calendar-card">
-          <div class="calendar-top"><div><b>7/19</b><span>周日 · Day 9</span></div><div class="night">17:00 航班</div></div>
-          <div class="calendar-body"><h3>精河 · 乌鲁木齐返程</h3><p>最晚07:00出发，中午还车，14:30前前往机场。</p><div class="metrics"><span class="metric">420-450 km</span><span class="metric">4.5-5.5 h</span></div><button class="details-toggle" data-target="detail-d9">查看分段</button></div>
-        </article>
-      </div>
-    </section>
-
-    <section id="details">
-      <div class="section-head">
-        <h2>每日分段路书</h2>
-        <p>公里数为规划估算。住宿和景区入口确定后，应在出发前一晚用实际地址重新导航。</p>
-      </div>
-      <div class="day-details">
-        <details class="day-detail" id="detail-d1">
-          <summary><div class="summary-date"><b>7/11</b><span>D0 / D1</span></div><div class="summary-title">天山机场 → 黄河路酒店 → 博物馆 → 大巴扎</div><div class="summary-distance">市区交通</div></summary>
-          <div class="detail-content"><ul class="segments">
-            <li><b>机场 → 如家NEO酒店</b><span>约25-30公里 · 夜间35-50分钟 · 凌晨办理入住后附近夜宵</span></li>
-            <li><b>酒店 → 自治区博物馆</b><span>约6-8公里 · 20-30分钟 · 11:30-14:30参观</span></li>
-            <li><b>博物馆 → 酒店</b><span>约6-8公里 · 20-30分钟 · 午餐后休息</span></li>
-            <li><b>酒店 → 国际大巴扎</b><span>约3-5公里 · 15-25分钟 · 18:00后游览</span></li>
-          </ul></div>
-        </details>
-        <details class="day-detail" id="detail-d2">
-          <summary><div class="summary-date"><b>7/12</b><span>Day 2</span></div><div class="summary-title">乌鲁木齐 → 百里丹霞 → 安集海 → 奎屯</div><div class="summary-distance">430-510 km</div></summary>
-          <div class="detail-content"><ul class="segments">
-            <li><b>酒店 → 神州租车大巴扎门店</b><span>约3-6公里 · 15-25分钟 · 取车后加满油</span></li>
-            <li><b>租车门店 → 百里丹霞东段</b><span>约100-120公里 · 2-2.5小时</span></li>
-            <li><b>百里丹霞东段 → 西段</b><span>约80-100公里 · 边走边玩2.5-3.5小时</span></li>
-            <li><b>西段 → 肯斯瓦特（可选）</b><span>约20-35公里 · 40-60分钟 · 13:30后直接放弃</span></li>
-            <li><b>肯斯瓦特 → 安集海</b><span>约190-230公里 · 3-4小时</span></li>
-            <li><b>安集海 → 奎屯</b><span>约65-85公里 · 1-1.5小时</span></li>
-          </ul><p class="day-note">安集海仅在官方开放、现场允许时进入；若17:30仍未抵达附近，直接去奎屯。</p></div>
-        </details>
-        <details class="day-detail" id="detail-d3">
-          <summary><div class="summary-date"><b>7/13</b><span>Day 3</span></div><div class="summary-title">奎屯 → 独库北段 → 唐布拉 → 孟克特 → 新源</div><div class="summary-distance">430-480 km</div></summary>
-          <div class="detail-content"><ul class="segments">
-            <li><b>奎屯 → 独山子独库起点</b><span>约20-30公里 · 30-40分钟 · 建议06:30出发</span></li>
-            <li><b>独库起点 → 乔尔玛</b><span>约135-145公里 · 纯驾驶3.5-4.5小时</span></li>
-            <li><b>乔尔玛 → 唐布拉核心路段</b><span>约40-60公里 · 边走边停1.5-2小时</span></li>
-            <li><b>唐布拉核心路段 → 孟克特入口</b><span>约50-80公里 · 1.5-2小时</span></li>
-            <li><b>孟克特游览</b><span>建议3-4小时 · 车辆限制与路况以现场为准</span></li>
-            <li><b>孟克特 → 新源县城</b><span>约160-200公里 · 3.5-4.5小时</span></li>
-          </ul><p class="day-note">最晚17:00左右离开孟克特。更晚则应考虑尼勒克方向就近住宿，避免疲劳夜驾。</p></div>
-        </details>
-        <details class="day-detail" id="detail-d4">
-          <summary><div class="summary-date"><b>7/14</b><span>Day 4</span></div><div class="summary-title">新源县 → 巩留 → 库尔德宁</div><div class="summary-distance">150-180 km</div></summary>
-          <div class="detail-content"><ul class="segments">
-            <li><b>新源县 → 巩留县</b><span>约90-110公里 · 1.5-2小时</span></li>
-            <li><b>巩留县 → 库尔德宁</b><span>约55-70公里 · 1-1.5小时</span></li>
-            <li><b>住宿地 → 景区入口</b><span>约5-20公里 · 10-30分钟 · 取决于民宿位置</span></li>
-            <li><b>库尔德宁景区</b><span>下午安排4-5小时 · 雪岭云杉、山谷草甸、河谷森林</span></li>
-          </ul></div>
-        </details>
-        <details class="day-detail" id="detail-d5">
-          <summary><div class="summary-date"><b>7/15</b><span>Day 5</span></div><div class="summary-title">库尔德宁 → 喀拉峻 → 特克斯</div><div class="summary-distance">210-260 km</div></summary>
-          <div class="detail-content"><ul class="segments">
-            <li><b>库尔德宁 → 巩留县</b><span>约55-70公里 · 1-1.5小时</span></li>
-            <li><b>巩留县 → 喀拉峻入口</b><span>约120-150公里 · 2.5-3小时</span></li>
-            <li><b>东西喀拉峻草原线</b><span>约5.5小时 · 鲜花台、猎鹰台等核心点</span></li>
-            <li><b>喀拉峻入口 → 特克斯</b><span>约30-40公里 · 45-60分钟</span></li>
-          </ul><p class="day-note">半天只走一条主线，不同时安排阔克苏大峡谷全线。</p></div>
-        </details>
-        <details class="day-detail" id="detail-d6">
-          <summary><div class="summary-date"><b>7/16</b><span>Day 6</span></div><div class="summary-title">特克斯 → 夏塔 → 昭苏</div><div class="summary-distance">250-280 km</div></summary>
-          <div class="detail-content"><ul class="segments">
-            <li><b>特克斯 → 昭苏县</b><span>07:30出发 · 约115-125公里 · 2-2.5小时</span></li>
-            <li><b>昭苏县 → 夏塔</b><span>约70-80公里 · 1-1.5小时</span></li>
-            <li><b>夏塔游览</b><span>约11:30-18:00 · 区间车、将军桥、鲜花台及冰川观景方向</span></li>
-            <li><b>夏塔 → 昭苏县</b><span>约70-80公里 · 1-1.5小时</span></li>
-          </ul><p class="day-note">建议提前购票，午前入园；继续向冰川方向徒步时，必须按景区末班车时间提前折返。</p></div>
-        </details>
-        <details class="day-detail" id="detail-d7">
-          <summary><div class="summary-date"><b>7/17</b><span>Day 7</span></div><div class="summary-title">昭苏 → 伊昭公路 → 伊宁</div><div class="summary-distance">150-180 km</div></summary>
-          <div class="detail-content"><ul class="segments">
-            <li><b>昭苏 → 伊昭公路南口</b><span>约10-20公里 · 20-30分钟</span></li>
-            <li><b>伊昭公路南口 → 达坂 → 北侧出口</b><span>约110-130公里 · 纯驾驶约3小时</span></li>
-            <li><b>伊昭出口 → 伊宁市区</b><span>约20-35公里 · 30-50分钟</span></li>
-            <li><b>伊宁酒店 → 喀赞其 → 六星街</b><span>市区合计约8-15公里 · 下午至晚间游览</span></li>
-          </ul></div>
-        </details>
-        <details class="day-detail" id="detail-d8">
-          <summary><div class="summary-date"><b>7/18</b><span>Day 8</span></div><div class="summary-title">伊宁 → 果子沟 → 赛里木湖 → 精河</div><div class="summary-distance">360-400 km</div></summary>
-          <div class="detail-content"><ul class="segments">
-            <li><b>伊宁 → 果子沟</b><span>约110-125公里 · 1.5-2小时</span></li>
-            <li><b>果子沟 → 赛湖入口</b><span>约25-35公里 · 30-45分钟</span></li>
-            <li><b>赛里木湖环湖</b><span>约90公里 · 纯驾驶约2小时 · 含停留5-7小时</span></li>
-            <li><b>赛湖东侧出口 → 精河</b><span>约140-160公里 · 2-2.5小时</span></li>
-          </ul><p class="day-note">当晚住精河，不等日落。建议最晚18:00驶离赛里木湖。</p></div>
-        </details>
-        <details class="day-detail" id="detail-d9">
-          <summary><div class="summary-date"><b>7/19</b><span>Day 9</span></div><div class="summary-title">精河 → 乌鲁木齐 → 机场</div><div class="summary-distance">420-450 km</div></summary>
-          <div class="detail-content"><ul class="segments">
-            <li><b>精河 → 乌鲁木齐市区</b><span>约410-440公里 · 4.5-5.5小时 · 最晚07:00出发</span></li>
-            <li><b>市区加油 → 神州还车门店</b><span>约5-15公里 · 20-40分钟</span></li>
-            <li><b>还车门店 → 天山国际机场</b><span>约20-30公里 · 35-60分钟</span></li>
-          </ul><p class="day-note">目标13:30前完成还车，14:30前前往机场，不安排购物和市区景点。</p></div>
-        </details>
-      </div>
-    </section>
-
-    <section id="packing">
-      <div class="section-head">
-        <h2>必带物品清单</h2>
-        <p>勾选结果会自动保存在当前浏览器中，刷新或下次打开仍可继续盘点。</p>
-      </div>
-      <div class="check-layout">
-        <aside class="check-panel check-progress">
-          <h3>准备进度</h3>
-          <div class="progress-ring" id="progressRing">
-            <div class="progress-text"><b id="progressNumber">0%</b><span id="progressCount">0 / 0</span></div>
-          </div>
-          <p id="progressHint">从证件和预约开始准备，最不容易临时补救。</p>
-          <button class="reset-button" id="resetChecklist" type="button">清空全部勾选</button>
-        </aside>
-        <div class="check-groups" id="checklist">
-          <section class="check-panel">
-            <h3>证件与订单</h3>
-            <div class="check-list">
-              <label class="check-item"><input type="checkbox" data-key="id"><span>身份证原件</span></label>
-              <label class="check-item"><input type="checkbox" data-key="license"><span>驾驶证、租车订单与保险凭证</span></label>
-              <label class="check-item"><input type="checkbox" data-key="hotel"><span>酒店订单与联系电话</span></label>
-              <label class="check-item"><input type="checkbox" data-key="border"><span>昭苏／夏塔边防证或最新政策确认</span></label>
-              <label class="check-item"><input type="checkbox" data-key="flight"><span>机票、航站楼和行李额度确认</span></label>
-            </div>
-          </section>
-          <section class="check-panel">
-            <h3>预约与路况</h3>
-            <div class="check-list">
-              <label class="check-item"><input type="checkbox" data-key="duku"><span>独库公路预约及截图</span></label>
-              <label class="check-item"><input type="checkbox" data-key="xiata"><span>夏塔门票／区间车预约</span></label>
-              <label class="check-item"><input type="checkbox" data-key="kalajun"><span>喀拉峻门票与开放线路确认</span></label>
-              <label class="check-item"><input type="checkbox" data-key="sayram"><span>赛里木湖自驾票确认</span></label>
-              <label class="check-item"><input type="checkbox" data-key="offline"><span>高德离线地图下载</span></label>
-            </div>
-          </section>
-          <section class="check-panel">
-            <h3>衣物与防护</h3>
-            <div class="check-list">
-              <label class="check-item"><input type="checkbox" data-key="jacket"><span>冲锋衣或薄羽绒服</span></label>
-              <label class="check-item"><input type="checkbox" data-key="shoes"><span>防滑徒步鞋与备用袜子</span></label>
-              <label class="check-item"><input type="checkbox" data-key="sun"><span>SPF50+防晒霜、帽子、墨镜、冰袖</span></label>
-              <label class="check-item"><input type="checkbox" data-key="rain"><span>便携雨衣或雨具</span></label>
-              <label class="check-item"><input type="checkbox" data-key="mosquito"><span>防蚊液</span></label>
-            </div>
-          </section>
-          <section class="check-panel">
-            <h3>车辆与电子设备</h3>
-            <div class="check-list">
-              <label class="check-item"><input type="checkbox" data-key="carcheck"><span>轮胎、备胎、刹车、玻璃水检查</span></label>
-              <label class="check-item"><input type="checkbox" data-key="charger"><span>车载充电器与充电线</span></label>
-              <label class="check-item"><input type="checkbox" data-key="powerbank"><span>充电宝</span></label>
-              <label class="check-item"><input type="checkbox" data-key="holder"><span>手机支架与行车记录确认</span></label>
-              <label class="check-item"><input type="checkbox" data-key="photos"><span>取车车况照片／视频留档</span></label>
-            </div>
-          </section>
-          <section class="check-panel">
-            <h3>补给与药品</h3>
-            <div class="check-list">
-              <label class="check-item"><input type="checkbox" data-key="water"><span>饮用水与保温杯</span></label>
-              <label class="check-item"><input type="checkbox" data-key="food"><span>面包、牛肉干、能量棒等路餐</span></label>
-              <label class="check-item"><input type="checkbox" data-key="medicine"><span>感冒、肠胃、晕车与止痛药</span></label>
-              <label class="check-item"><input type="checkbox" data-key="firstaid"><span>创可贴、消毒湿巾与小型急救包</span></label>
-              <label class="check-item"><input type="checkbox" data-key="trash"><span>垃圾袋、纸巾和湿巾</span></label>
-            </div>
-          </section>
-          <section class="check-panel">
-            <h3>出发前最后确认</h3>
-            <div class="check-list">
-              <label class="check-item"><input type="checkbox" data-key="weather"><span>独库、伊昭与景区天气</span></label>
-              <label class="check-item"><input type="checkbox" data-key="fuel"><span>每天离城前加满油</span></label>
-              <label class="check-item"><input type="checkbox" data-key="cash"><span>少量现金与银行卡</span></label>
-              <label class="check-item"><input type="checkbox" data-key="contacts"><span>租车、酒店、保险救援电话收藏</span></label>
-              <label class="check-item"><input type="checkbox" data-key="planb"><span>Plan B／C关键住宿收藏</span></label>
-            </div>
-          </section>
-        </div>
-      </div>
-    </section>
-
-    <section id="alerts">
-      <div class="section-head">
-        <h2>关键提醒</h2>
-        <p>这几项决定路线能否顺利执行，建议在出发前7天、3天和前一晚分别检查。</p>
-      </div>
-      <div class="info-grid">
-        <article class="info-panel"><h3>独库与伊昭</h3><ul><li>按预约入口和时段进入独库。</li><li>雨雪、落石或施工可能临时管制。</li><li>不要在管制口长时间赌开放。</li></ul></article>
-        <article class="info-panel"><h3>最紧张的两天</h3><ul><li>D3最晚17:00离开孟克特。</li><li>D9最晚07:00离开精河。</li><li>任何延误都优先压缩景点，不压缩返程缓冲。</li></ul></article>
-        <article class="info-panel"><h3>住宿策略</h3><ul><li>未订住宿优先选择可免费取消。</li><li>库尔德宁确认停车和晚餐条件。</li><li>收藏尼勒克方向住宿，作为D3应急点。</li></ul></article>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">页面版本：2026-06-21 · 数据来自当前 Plan A 行程文档。所有里程与时间均为规划估算，实际以当天导航、天气、道路管制和景区公告为准。</div>
-  </footer>
+    <div class="detail-metrics" id="detailMetrics"></div>
+    <ul class="segment-list" id="segmentList"></ul>
+    <p class="detail-note" id="detailNote"></p>
+  </aside>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script src="amap-route-data.js"></script>
   <script>
-    const planButtons = document.querySelectorAll("[data-plan]");
-    const planPanels = document.querySelectorAll("[data-panel]");
+    const NALATI = { name: "那拉提游客中心", lon: 84.029772, lat: 43.319864 };
+    const LAVENDER = { name: "解忧公主薰衣草园", lon: 80.75656, lat: 44.169989 };
+    const dayColors = {
+      D1: "#17745f", D2: "#bd5b47", D3: "#d19a37", D4: "#477e56",
+      D5: "#17745f", D6: "#76658d", D7: "#3577a6", D8: "#28879a", D9: "#555d58"
+    };
 
-    planButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const plan = button.dataset.plan;
-        planButtons.forEach((item) => {
-          const active = item === button;
-          item.classList.toggle("active", active);
-          item.setAttribute("aria-selected", String(active));
-        });
-        planPanels.forEach((panel) => {
-          panel.hidden = panel.dataset.panel !== plan;
-        });
-      });
-    });
-
-    document.querySelectorAll(".details-toggle").forEach((button) => {
-      button.addEventListener("click", () => {
-        const detail = document.getElementById(button.dataset.target);
-        detail.open = true;
-        detail.scrollIntoView({ behavior: "smooth", block: "center" });
-      });
-    });
-
-    const storageKey = "xinjiang-plan-a-packing-v1";
-    const checkboxes = [...document.querySelectorAll("#checklist input[type='checkbox']")];
-    const progressRing = document.getElementById("progressRing");
-    const progressNumber = document.getElementById("progressNumber");
-    const progressCount = document.getElementById("progressCount");
-    const progressHint = document.getElementById("progressHint");
-
-    function readState() {
-      try {
-        return JSON.parse(localStorage.getItem(storageKey)) || {};
-      } catch {
-        return {};
+    const commonDays = {
+      D1: {
+        date: "7/11", weekday: "周六", label: "Day 0 / 1",
+        title: "乌鲁木齐城市休整",
+        summary: "凌晨落地吃夜宵，补觉后参观自治区博物馆，傍晚逛国际大巴扎。",
+        places: ["天山机场", "自治区博物馆", "国际大巴扎", "和田二街"],
+        stay: "如家NEO 黄河路店", stayStatus: "已订",
+        distance: "市区交通", time: "轻松日",
+        segments: [
+          ["天山机场 → 如家NEO酒店", "约25-30公里 · 夜间35-50分钟 · 凌晨入住"],
+          ["酒店 → 自治区博物馆", "约6-8公里 · 20-30分钟 · 午前出发"],
+          ["自治区博物馆 → 酒店", "约6-8公里 · 午餐后回酒店休息"],
+          ["酒店 → 国际大巴扎", "约3-5公里 · 傍晚游览并在和田二街用餐"]
+        ],
+        note: "当天不取车。博物馆需提前预约，并根据凌晨入睡时间灵活调整上午安排。"
+      },
+      D2: {
+        date: "7/12", weekday: "周日", label: "Day 2",
+        title: "S101丹霞与安集海",
+        summary: "取车进入S101百里丹霞，肯斯瓦特按时间选择，傍晚游安集海后住奎屯。",
+        places: ["乌鲁木齐", "百里丹霞", "肯斯瓦特·可选", "安集海", "奎屯"],
+        stay: "奎屯市", stayStatus: "待订",
+        distance: "430-510 km", time: "驾驶 8-9 h",
+        segments: [
+          ["酒店 → 神州租车大巴扎门店", "约3-6公里 · 取车、验车并加满油"],
+          ["租车门店 → 百里丹霞东段", "约100-120公里 · 约2-2.5小时"],
+          ["百里丹霞东段 → 西段", "约80-100公里 · 边走边玩2.5-3.5小时"],
+          ["西段 → 肯斯瓦特（可选）", "约20-35公里 · 13:30后直接放弃"],
+          ["肯斯瓦特 → 安集海", "约190-230公里 · 约3-4小时"],
+          ["安集海 → 奎屯", "约65-85公里 · 约1-1.5小时"]
+        ],
+        note: "百里丹霞和安集海必去，肯斯瓦特只在进度明显提前时加入。安集海以官方开放状态为准。"
+      },
+      D3: {
+        date: "7/13", weekday: "周一", label: "Day 3",
+        title: "独库北段与孟克特",
+        summary: "早进独库，经乔尔玛进入唐布拉和孟克特，晚上长距离转场到新源。",
+        places: ["奎屯", "独库起点", "乔尔玛", "唐布拉", "孟克特", "新源"],
+        stay: "新源县城", stayStatus: "待订",
+        distance: "430-480 km", time: "高强度日",
+        segments: [
+          ["奎屯 → 独库公路起点", "约20-30公里 · 建议06:30前后出发"],
+          ["独库起点 → 乔尔玛", "约135-145公里 · 纯驾驶3.5-4.5小时"],
+          ["乔尔玛 → 唐布拉核心路段", "约40-60公里 · 边走边停1.5-2小时"],
+          ["唐布拉 → 孟克特入口", "约50-80公里 · 约1.5-2小时"],
+          ["孟克特游览", "建议3-4小时 · 车辆限制以现场为准"],
+          ["孟克特 → 新源县城", "约160-200公里 · 约3.5-4.5小时"]
+        ],
+        note: "这是全程压力最大的一天。最晚17:00左右离开孟克特，更晚则考虑就近住宿，避免疲劳夜驾。"
+      },
+      D6: {
+        date: "7/16", weekday: "周四", label: "Day 6",
+        title: "特克斯直达夏塔",
+        summary: "早上从特克斯直接前往夏塔，留足时间看雪山古道，傍晚转宿昭苏。",
+        places: ["特克斯", "昭苏", "夏塔", "昭苏"],
+        stay: "昭苏县城", stayStatus: "待订",
+        distance: "250-280 km", time: "驾驶 4.5-5.5 h",
+        segments: [
+          ["特克斯 → 昭苏县", "约115-125公里 · 约2-2.5小时"],
+          ["昭苏县 → 夏塔", "约70-80公里 · 约1-1.5小时"],
+          ["夏塔游览", "区间车、将军桥、鲜花台及冰川观景方向"],
+          ["夏塔 → 昭苏县", "约70-80公里 · 约1-1.5小时"]
+        ],
+        note: "建议提前购票并午前入园。向冰川方向徒步时，必须按景区末班车时间提前折返。"
+      },
+      D7: {
+        date: "7/17", weekday: "周五", label: "Day 7",
+        title: "伊昭公路到伊宁",
+        summary: "从昭苏翻越伊昭公路，下午逛喀赞其，傍晚在六星街吃饭。",
+        places: ["昭苏", "伊昭公路", "喀赞其", "六星街", "伊宁"],
+        stay: "伊宁市", stayStatus: "待订",
+        distance: "150-180 km", time: "驾驶 3.5-4.5 h",
+        segments: [
+          ["昭苏 → 伊昭公路南口", "约10-20公里 · 约20-30分钟"],
+          ["伊昭南口 → 达坂 → 北侧出口", "约110-130公里 · 纯驾驶约3小时"],
+          ["伊昭出口 → 伊宁市区", "约20-35公里 · 约30-50分钟"],
+          ["喀赞其 → 六星街", "市区游览 · 下午至晚间"]
+        ],
+        note: "伊昭公路受天气影响较大。进入山区前加满油，遇临时封闭立即按Plan C绕行。"
+      },
+      D8: {
+        date: "7/18", weekday: "周六", label: "Day 8",
+        title: "薰衣草与赛里木湖",
+        summary: "早离伊宁，先顺路打卡解忧公主薰衣草园，再经果子沟进入赛里木湖环湖，傍晚前往精河。",
+        places: ["伊宁", "解忧公主薰衣草园", "果子沟", "赛里木湖", "精河"],
+        stay: "精河县城", stayStatus: "待订",
+        distance: "380-430 km", time: "驾驶 6-7 h",
+        segments: [
+          ["伊宁 → 解忧公主薰衣草园", "高德测距约58公里 · 约1小时10分钟"],
+          ["薰衣草园打卡", "建议45-75分钟 · 7月中旬以园区晚花和现场状态为准"],
+          ["薰衣草园 → 果子沟 → 赛里木湖入口", "约95-110公里 · 约1.5-2小时"],
+          ["赛里木湖环湖", "约90公里 · 含停留建议4-6小时"],
+          ["赛湖东侧出口 → 精河", "高德测距约140公里 · 约1小时40分钟"]
+        ],
+        note: "薰衣草园只作为顺路打卡，不建议久留。当晚还需前往精河，建议最晚18:00驶离赛里木湖景区。"
+      },
+      D9: {
+        date: "7/19", weekday: "周日", label: "Day 9",
+        title: "精河返回乌鲁木齐",
+        summary: "最晚07:00离开精河，中午完成还车，14:30前前往机场搭乘17:00航班。",
+        places: ["精河", "乌鲁木齐", "还车门店", "天山机场"],
+        stay: "当日返程", stayStatus: "17:00航班",
+        distance: "420-450 km", time: "驾驶 4.5-5.5 h",
+        segments: [
+          ["精河 → 乌鲁木齐市区", "约410-440公里 · 最晚07:00出发"],
+          ["市区加油 → 神州还车门店", "约5-15公里 · 目标13:30前完成"],
+          ["还车门店 → 天山国际机场", "约20-30公里 · 约35-60分钟"]
+        ],
+        note: "返程日不安排购物和市区景点。遇拥堵或事故时立即压缩午餐，优先还车和前往机场。"
       }
-    }
+    };
 
-    function updateProgress() {
-      const done = checkboxes.filter((item) => item.checked).length;
-      const total = checkboxes.length;
-      const percent = total ? Math.round(done / total * 100) : 0;
-      progressRing.style.setProperty("--progress", `${percent}%`);
-      progressNumber.textContent = `${percent}%`;
-      progressCount.textContent = `${done} / ${total}`;
-      progressHint.textContent = percent === 100
-        ? "全部准备完成。出发前再核对一次道路和天气。"
-        : percent >= 70
-          ? "已经很接近完成，重点补齐证件、预约和车辆项目。"
-          : "从证件和预约开始准备，最不容易临时补救。";
-    }
-
-    const savedState = readState();
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = Boolean(savedState[checkbox.dataset.key]);
-      checkbox.addEventListener("change", () => {
-        const state = readState();
-        state[checkbox.dataset.key] = checkbox.checked;
-        localStorage.setItem(storageKey, JSON.stringify(state));
-        updateProgress();
-      });
-    });
-
-    document.getElementById("resetChecklist").addEventListener("click", () => {
-      if (!window.confirm("确定清空全部物品勾选记录吗？")) return;
-      localStorage.removeItem(storageKey);
-      checkboxes.forEach((checkbox) => { checkbox.checked = false; });
-      updateProgress();
-    });
-
-    updateProgress();
-
-    function renderAmapData() {
-      const data = window.AMAP_ROUTE_DATA;
-      if (!data) return;
-
-      const status = document.getElementById("amapStatus");
-      const generated = document.getElementById("amapGenerated");
-      status.textContent = `已载入高德 MCP 数据：${Object.keys(data.points).length} 个地点、${data.days.reduce((sum, day) => sum + day.legs.length, 0)} 段驾车路线。`;
-      generated.textContent = `更新时间：${data.generatedAt.replace("T", " ")}`;
-
-      const link = document.getElementById("amapOpenLink");
-      if (data.personalMapUri) {
-        link.href = data.personalMapUri;
-        link.hidden = false;
+    const planDays = {
+      a: {
+        D4: {
+          date: "7/14", weekday: "周二", label: "Day 4",
+          title: "新源到库尔德宁",
+          summary: "上午经巩留转场，下午游览雪岭云杉、山谷草甸与河谷森林。",
+          places: ["新源", "巩留", "库尔德宁"],
+          stay: "库尔德宁景区附近", stayStatus: "待订",
+          distance: "150-180 km", time: "驾驶 3-4 h",
+          segments: [
+            ["新源县 → 巩留县", "约90-110公里 · 约1.5-2小时"],
+            ["巩留县 → 库尔德宁", "约55-70公里 · 约1-1.5小时"],
+            ["库尔德宁景区", "下午安排4-5小时 · 云杉、草甸与河谷森林"]
+          ],
+          note: "住宿尽量选择景区入口或库尔德宁镇附近，并提前确认停车和晚餐条件。"
+        },
+        D5: {
+          date: "7/15", weekday: "周三", label: "Day 5",
+          title: "库尔德宁到喀拉峻",
+          summary: "从库尔德宁前往喀拉峻，下午集中游草原，傍晚进入特克斯八卦城。",
+          places: ["库尔德宁", "巩留", "喀拉峻", "特克斯"],
+          stay: "特克斯县城", stayStatus: "待订",
+          distance: "210-260 km", time: "驾驶 4.5-5.5 h",
+          segments: [
+            ["库尔德宁 → 巩留县", "约55-70公里 · 约1-1.5小时"],
+            ["巩留县 → 喀拉峻入口", "约120-150公里 · 约2.5-3小时"],
+            ["东西喀拉峻草原线", "半日选择一条主线，不求全部覆盖"],
+            ["喀拉峻入口 → 特克斯", "约30-40公里 · 约45-60分钟"]
+          ],
+          note: "半日只走一条主线，不同时安排阔克苏大峡谷全线，优先保证傍晚抵达特克斯。"
+        }
+      },
+      b: {
+        D4: {
+          date: "7/14", weekday: "周二", label: "Day 4",
+          title: "那拉提自驾游览",
+          summary: "从新源前往那拉提，按预约线路自驾游览草原，晚上优先住那拉提镇。",
+          places: ["新源", "那拉提游客中心", "那拉提草原"],
+          stay: "那拉提镇", stayStatus: "首选",
+          distance: "约 70 km", time: "单程 1 h 20 min",
+          segments: [
+            ["新源县城 → 那拉提游客中心", "高德规划约70公里 · 约1小时19分钟"],
+            ["那拉提景区自驾", "按预约时段、允许线路及当天交通组织游览"],
+            ["景区 → 那拉提镇住宿", "优先就近入住，减少次日重复车程"]
+          ],
+          note: "Plan B以成功预约7月14日自驾票为前提。若返回新源住宿，D5需至少提前1-1.5小时出发。"
+        },
+        D5: {
+          date: "7/15", weekday: "周三", label: "Day 5",
+          title: "那拉提到喀拉峻",
+          summary: "早离那拉提，长距离转场至喀拉峻，下午选择重点线路，晚上住特克斯。",
+          places: ["那拉提", "喀拉峻", "特克斯"],
+          stay: "特克斯县城", stayStatus: "待订",
+          distance: "约 267+ km", time: "转场约 4 h 40 min",
+          segments: [
+            ["那拉提 → 喀拉峻核心区域", "高德规划约267公里 · 约4小时40分钟"],
+            ["喀拉峻重点线路", "中午前后抵达，根据时间选择东西喀拉峻重点"],
+            ["喀拉峻 → 特克斯", "结束游览后进入县城住宿"]
+          ],
+          note: "这是Plan B的关键长途日，建议07:00左右出发。中午后才抵达时主动缩短景区线路。"
+        }
+      },
+      c: {
+        D2: {
+          date: "7/12", weekday: "周日", label: "Day 2",
+          title: "S101丹霞到精河",
+          summary: "取车后仍走S101百里丹霞和安集海，确认独库封路后继续向西，晚上住精河。",
+          places: ["乌鲁木齐", "百里丹霞", "安集海", "精河"],
+          stay: "精河县城", stayStatus: "待订",
+          distance: "590-650 km", time: "驾驶 9-10 h",
+          segments: [
+            ["酒店 → 神州租车大巴扎门店", "约3-6公里 · 取车、验车并加满油"],
+            ["租车门店 → 百里丹霞东段", "约100-120公里 · 约2-2.5小时"],
+            ["百里丹霞 → 安集海", "约260-320公里 · 约4.5-5.5小时 · 放弃肯斯瓦特"],
+            ["安集海 → 精河县城", "高德测距约229公里 · 约2小时40分钟"]
+          ],
+          note: "Plan C启用后D2不再住奎屯，肯斯瓦特直接取消，目标是把D3留给赛里木湖和伊宁。"
+        },
+        D3: {
+          date: "7/13", weekday: "周一", label: "Day 3",
+          title: "赛里木湖到伊宁",
+          summary: "独库封路日不硬闯，先从精河进入赛里木湖环湖，下午经果子沟到伊宁。",
+          places: ["精河", "赛里木湖", "果子沟", "伊宁"],
+          stay: "伊宁市", stayStatus: "待订",
+          distance: "280-320 km", time: "驾驶 4-5 h",
+          segments: [
+            ["精河 → 赛里木湖东门", "高德测距约133公里 · 约1小时40分钟"],
+            ["赛里木湖环湖", "约90公里 · 含停留建议4-6小时"],
+            ["赛里木湖 → 果子沟 → 伊宁", "高德测距约142公里 · 约2小时20分钟"]
+          ],
+          note: "这天的核心是把赛里木湖提前完成。若D2到精河太晚，D3减少环湖停留，优先保证抵达伊宁。"
+        },
+        D4: {
+          date: "7/14", weekday: "周二", label: "Day 4",
+          title: "伊宁城市缓冲",
+          summary: "在伊宁休整，上午可补觉或逛喀赞其，下午六星街和市区美食。",
+          places: ["伊宁", "喀赞其", "六星街", "伊宁"],
+          stay: "伊宁市", stayStatus: "待订",
+          distance: "市区交通", time: "轻松日",
+          segments: [
+            ["上午", "补觉、洗衣、车辆检查，给后续山路留体力"],
+            ["喀赞其民俗区", "半日市区游览，按体力选择深度"],
+            ["六星街", "傍晚至晚间用餐和散步"]
+          ],
+          note: "Plan C把伊宁作为缓冲点，抵消D2长途转场的疲劳，也为D5伊昭方向留出机动。"
+        },
+        D5: {
+          date: "7/15", weekday: "周三", label: "Day 5",
+          title: "伊宁到昭苏夏塔",
+          summary: "从伊宁经伊昭方向到昭苏，直奔夏塔游览，晚上住昭苏。",
+          places: ["伊宁", "昭苏", "夏塔", "昭苏"],
+          stay: "昭苏县城", stayStatus: "待订",
+          distance: "300-340 km", time: "驾驶 5-6 h",
+          segments: [
+            ["伊宁 → 昭苏", "约150-180公里 · 约3.5-4.5小时 · 走伊昭需看开放状态"],
+            ["昭苏 → 夏塔", "约70-80公里 · 约1-1.5小时"],
+            ["夏塔游览", "区间车、将军桥、鲜花台及冰川观景方向"],
+            ["夏塔 → 昭苏县", "约70-80公里 · 约1-1.5小时"]
+          ],
+          note: "若伊昭公路也封闭，Plan C还需要二次调整为高速绕行或压缩夏塔。"
+        },
+        D6: {
+          date: "7/16", weekday: "周四", label: "Day 6",
+          title: "特克斯与喀拉峻",
+          summary: "昭苏出发到特克斯，上午转场，下午游喀拉峻草原，晚上住特克斯。",
+          places: ["昭苏", "特克斯", "喀拉峻", "特克斯"],
+          stay: "特克斯县城", stayStatus: "待订",
+          distance: "170-220 km", time: "驾驶 3.5-4.5 h",
+          segments: [
+            ["昭苏 → 特克斯", "高德测距约63公里 · 约1小时"],
+            ["特克斯 → 喀拉峻入口", "高德测距约46公里 · 约1小时10分钟"],
+            ["喀拉峻重点线路", "下午选择东西喀拉峻或草原重点，不强求全覆盖"],
+            ["喀拉峻 → 特克斯", "结束后返回县城住宿"]
+          ],
+          note: "这天比Plan A顺序更轻，适合把喀拉峻作为半日重点，晚上保留八卦城散步时间。"
+        },
+        D7: {
+          date: "7/17", weekday: "周五", label: "Day 7",
+          title: "特克斯到那拉提",
+          summary: "从特克斯出发，目标中午前后抵达那拉提，下午根据票务和体力轻量游览。",
+          places: ["特克斯", "那拉提"],
+          stay: "那拉提镇", stayStatus: "待订",
+          distance: "约 218 km", time: "驾驶约 3 h 40 min",
+          segments: [
+            ["特克斯 → 那拉提游客中心", "高德测距约218公里 · 约3小时40分钟"],
+            ["那拉提镇入住/午餐", "中午前后抵达后先休整"],
+            ["那拉提轻量游览", "下午只安排一条主线或镇区周边，避免过度拉满"]
+          ],
+          note: "如果D8计划走独库返奎屯，D7尽量住那拉提镇，减少次日重复车程。"
+        },
+        D8: {
+          date: "7/18", weekday: "周六", label: "Day 8",
+          title: "那拉提反穿到奎屯",
+          summary: "上午逛那拉提，午后出发走独库方向，经乔尔玛、独山子方向抵达奎屯。",
+          places: ["那拉提", "乔尔玛", "独库北段", "奎屯"],
+          stay: "奎屯市", stayStatus: "待订",
+          distance: "300-360 km", time: "驾驶 6-8 h",
+          segments: [
+            ["那拉提上午游览", "控制在半日内，午前后必须开始转场"],
+            ["那拉提 → 乔尔玛", "约150-180公里 · 山路约3-4小时，以实时路况为准"],
+            ["乔尔玛 → 独库北段 → 奎屯", "约150-180公里 · 山路约3-4小时"],
+            ["奎屯入住", "抵达后补给、休息，为D9返程留余量"]
+          ],
+          note: "此日假设独库在7月18日前恢复通行；若仍封闭，必须改走G218/G30高速绕回奎屯或直接压缩返程。"
+        },
+        D9: {
+          date: "7/19", weekday: "周日", label: "Day 9",
+          title: "奎屯返回乌鲁木齐",
+          summary: "从奎屯早起回乌鲁木齐，还车后前往机场搭乘17:00航班。",
+          places: ["奎屯", "乌鲁木齐", "还车门店", "天山机场"],
+          stay: "当日返程", stayStatus: "17:00航班",
+          distance: "260-300 km", time: "驾驶 3-4 h",
+          segments: [
+            ["奎屯 → 乌鲁木齐市区", "约250-280公里 · 建议08:00前出发"],
+            ["市区加油 → 神州还车门店", "约5-15公里 · 目标13:30前完成"],
+            ["还车门店 → 天山国际机场", "约20-30公里 · 约35-60分钟"]
+          ],
+          note: "返程日不再安排景点。若D8因独库延误，D9必须优先保证还车和机场。"
+        }
       }
+    };
 
-      data.days.forEach((day) => {
-        const detail = document.getElementById(`detail-${day.day.toLowerCase()}`);
-        if (!detail) return;
-        const distance = day.legs.reduce((sum, leg) => sum + leg.distanceKm, 0);
-        const minutes = day.legs.reduce((sum, leg) => sum + leg.durationMinutes, 0);
-        const summary = document.createElement("p");
-        summary.className = "amap-day-summary";
-        summary.textContent = `高德 MCP 驾车汇总：${distance.toFixed(1)}公里 · 约${Math.floor(minutes / 60)}小时${minutes % 60}分钟（不含游览和停车）`;
-        detail.querySelector(".detail-content").prepend(summary);
-      });
-
-      if (window.L) {
-        renderLeafletMap(data);
-      } else {
-        document.getElementById("travelMap").hidden = true;
-        const staticMap = document.getElementById("staticMapFallback");
-        staticMap.hidden = false;
-        staticMap.addEventListener("error", () => {
-          staticMap.hidden = true;
-          document.getElementById("routeMap").hidden = false;
-          renderAmapGeoMap(data);
-        }, { once: true });
+    const order = ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"];
+    const mapPointKeys = {
+      D1: ["hotel"],
+      D2: ["hotel", "baili", "kensiwate", "anjihai", "kuitun"],
+      D3: ["kuitun", "duku", "qiaoerma", "tangbula", "mengket", "xinyuan"],
+      D4: ["xinyuan", "kuerdening"],
+      D5: ["kuerdening", "kalajun", "tekesi"],
+      D6: ["tekesi", "xiata", "zhaosu"],
+      D7: ["zhaosu", "yining"],
+      D8: ["yining", "lavender", "sayram", "jinghe"],
+      D9: ["jinghe", "airport"]
+    };
+    const planMapPointKeys = {
+      b: {
+        D4: ["xinyuan", "nalati"],
+        D5: ["nalati", "kalajun", "tekesi"]
+      },
+      c: {
+        D2: ["hotel", "baili", "anjihai", "jinghe"],
+        D3: ["jinghe", "sayram", "yining"],
+        D4: ["yining"],
+        D5: ["yining", "zhaosu", "xiata", "zhaosu"],
+        D6: ["zhaosu", "tekesi", "kalajun", "tekesi"],
+        D7: ["tekesi", "nalati"],
+        D8: ["nalati", "qiaoerma", "duku", "kuitun"],
+        D9: ["kuitun", "airport"]
       }
+    };
+    const pointLabels = {
+      hotel: "乌鲁木齐", baili: "百里丹霞", kensiwate: "肯斯瓦特", anjihai: "安集海",
+      kuitun: "奎屯", duku: "独库起点", qiaoerma: "乔尔玛", tangbula: "唐布拉",
+      mengket: "孟克特", xinyuan: "新源", kuerdening: "库尔德宁", kalajun: "喀拉峻",
+      tekesi: "特克斯", xiata: "夏塔", zhaosu: "昭苏", yining: "伊宁",
+      sayram: "赛里木湖", jinghe: "精河", airport: "天山机场", nalati: "那拉提",
+      lavender: "薰衣草园"
+    };
+    const stayPointKeys = new Set(["hotel", "kuitun", "xinyuan", "kuerdening", "tekesi", "zhaosu", "yining", "jinghe", "nalati"]);
+    const scenicPointKeys = new Set(["baili", "kensiwate", "anjihai", "duku", "qiaoerma", "tangbula", "mengket", "kuerdening", "kalajun", "xiata", "sayram", "nalati", "lavender"]);
+
+    let currentPlan = localStorage.getItem("xinjiang-current-plan") || "a";
+    let currentDay = "D1";
+    let currentView = "today";
+    let dayMap;
+    let overviewMap;
+    let dayLayerGroup;
+    let overviewLayerGroup;
+    const planSeenKey = "xinjiang-plan-selector-seen-v1";
+
+    function getDays() {
+      return Object.fromEntries(order.map((key) => [key, planDays[currentPlan][key] || commonDays[key]]));
     }
 
     function gcj02ToWgs84(lon, lat) {
       const pi = Math.PI;
       const a = 6378245;
       const ee = 0.006693421622965943;
-      function outOfChina(x, y) {
-        return x < 72.004 || x > 137.8347 || y < 0.8293 || y > 55.8271;
-      }
+      if (lon < 72.004 || lon > 137.8347 || lat < .8293 || lat > 55.8271) return [lat, lon];
       function transformLat(x, y) {
-        let value = -100 + 2 * x + 3 * y + .2 * y * y + .1 * x * y + .2 * Math.sqrt(Math.abs(x));
-        value += (20 * Math.sin(6 * x * pi) + 20 * Math.sin(2 * x * pi)) * 2 / 3;
-        value += (20 * Math.sin(y * pi) + 40 * Math.sin(y / 3 * pi)) * 2 / 3;
-        value += (160 * Math.sin(y / 12 * pi) + 320 * Math.sin(y * pi / 30)) * 2 / 3;
+        let value = -100 + 2*x + 3*y + .2*y*y + .1*x*y + .2*Math.sqrt(Math.abs(x));
+        value += (20*Math.sin(6*x*pi) + 20*Math.sin(2*x*pi))*2/3;
+        value += (20*Math.sin(y*pi) + 40*Math.sin(y/3*pi))*2/3;
+        value += (160*Math.sin(y/12*pi) + 320*Math.sin(y*pi/30))*2/3;
         return value;
       }
       function transformLon(x, y) {
-        let value = 300 + x + 2 * y + .1 * x * x + .1 * x * y + .1 * Math.sqrt(Math.abs(x));
-        value += (20 * Math.sin(6 * x * pi) + 20 * Math.sin(2 * x * pi)) * 2 / 3;
-        value += (20 * Math.sin(x * pi) + 40 * Math.sin(x / 3 * pi)) * 2 / 3;
-        value += (150 * Math.sin(x / 12 * pi) + 300 * Math.sin(x / 30 * pi)) * 2 / 3;
+        let value = 300 + x + 2*y + .1*x*x + .1*x*y + .1*Math.sqrt(Math.abs(x));
+        value += (20*Math.sin(6*x*pi) + 20*Math.sin(2*x*pi))*2/3;
+        value += (20*Math.sin(x*pi) + 40*Math.sin(x/3*pi))*2/3;
+        value += (150*Math.sin(x/12*pi) + 300*Math.sin(x/30*pi))*2/3;
         return value;
       }
-      if (outOfChina(lon, lat)) return [lat, lon];
       let dLat = transformLat(lon - 105, lat - 35);
       let dLon = transformLon(lon - 105, lat - 35);
       const radLat = lat / 180 * pi;
@@ -1039,256 +1125,359 @@
       return [lat * 2 - (lat + dLat), lon * 2 - (lon + dLon)];
     }
 
-    function renderLeafletMap(data) {
-      const map = L.map("travelMap", {
-        zoomControl: true,
-        scrollWheelZoom: false,
-        attributionControl: true
+    function coordFor(key) {
+      if (key === "nalati") return gcj02ToWgs84(NALATI.lon, NALATI.lat);
+      if (key === "lavender") return gcj02ToWgs84(LAVENDER.lon, LAVENDER.lat);
+      const point = window.AMAP_ROUTE_DATA?.points?.[key];
+      return point ? gcj02ToWgs84(point.lon, point.lat) : null;
+    }
+
+    function dayPointKeys(day) {
+      if (planMapPointKeys[currentPlan]?.[day]) return planMapPointKeys[currentPlan][day];
+      return mapPointKeys[day] || [];
+    }
+
+    function routeForDay(day) {
+      if (!window.AMAP_ROUTE_DATA || day === "D1") return [];
+      if (planMapPointKeys[currentPlan]?.[day]) {
+        return dayPointKeys(day).map(coordFor).filter(Boolean);
+      }
+      const routeDay = window.AMAP_ROUTE_DATA.days.find((item) => item.day === day);
+      if (!routeDay) return [];
+      const result = [];
+      routeDay.legs.forEach((leg) => {
+        const polyline = leg.webRoute?.status === "real-road" ? leg.webRoute.polyline : null;
+        const legPoints = polyline?.length
+          ? polyline.map(([lon, lat]) => gcj02ToWgs84(lon, lat))
+          : [coordFor(leg.from), coordFor(leg.to)].filter(Boolean);
+        if (result.length && legPoints.length) legPoints.shift();
+        result.push(...legPoints);
       });
-      const roadLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      return result;
+    }
+
+    function createBaseMap(elementId, zoomControl) {
+      const map = L.map(elementId, { zoomControl, scrollWheelZoom: false, attributionControl: true });
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 18,
         attribution: "&copy; OpenStreetMap"
-      });
-      const terrainLayer = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
-        maxZoom: 17,
-        attribution: "Map data &copy; OpenStreetMap · Map style &copy; OpenTopoMap"
-      });
-      roadLayer.addTo(map);
-      L.control.layers({ "道路": roadLayer, "地形": terrainLayer }, null, { position: "topleft" }).addTo(map);
+      }).addTo(map);
+      return map;
+    }
 
-      const colors = {
-        D2: "#bf5945",
-        D3: "#bd7624",
-        D4: "#5e8247",
-        D5: "#167b75",
-        D6: "#765f87",
-        D7: "#3974a8",
-        D8: "#278aa0",
-        D9: "#4e5962"
+    function addRoute(map, group, day, muted) {
+      const route = routeForDay(day);
+      if (route.length > 1) {
+        L.polyline(route, { color: "#ffffff", weight: muted ? 6 : 9, opacity: .84, lineCap: "round" }).addTo(group);
+        L.polyline(route, {
+          color: dayColors[day], weight: muted ? 3 : 5, opacity: muted ? .68 : .98,
+          dashArray: planMapPointKeys[currentPlan]?.[day] ? "7 7" : null,
+          lineCap: "round", lineJoin: "round"
+        }).addTo(group);
+      }
+      return route;
+    }
+
+    function svgIcon(kind) {
+      const icons = {
+        start: '<path d="M5 5v14"/><path d="M5 5h10l-1.6 3L15 11H5"/>',
+        end: '<path d="M18 7c0 5-6 11-6 11S6 12 6 7a6 6 0 1 1 12 0Z"/><circle cx="12" cy="7" r="2"/>',
+        stay: '<path d="M4 11V6a2 2 0 0 1 2-2h5v7"/><path d="M11 11h7a2 2 0 0 1 2 2v5"/><path d="M4 18h16"/><path d="M4 11h16"/>',
+        scenic: '<path d="m4 18 5-8 4 6 3-4 4 6"/><path d="M14 6h.01"/>'
       };
-      const stays = new Set(["hotel", "kuitun", "xinyuan", "kuerdening", "tekesi", "zhaosu", "yining", "jinghe"]);
-      const displayNames = {
-        hotel: "乌鲁木齐",
-        baili: "百里丹霞",
-        kensiwate: "肯斯瓦特",
-        anjihai: "安集海",
-        kuitun: "奎屯",
-        duku: "独库起点",
-        qiaoerma: "乔尔玛",
-        tangbula: "唐布拉",
-        mengket: "孟克特",
-        xinyuan: "新源",
-        kuerdening: "库尔德宁",
-        kalajun: "喀拉峻",
-        tekesi: "特克斯",
-        xiata: "夏塔",
-        zhaosu: "昭苏",
-        yining: "伊宁",
-        sayram: "赛里木湖",
-        jinghe: "精河",
-        airport: "天山机场"
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[kind] || icons.scenic}</svg>`;
+    }
+
+    function markerKind(key, index, total) {
+      if (index === 0) return "start";
+      if (index === total - 1) return "end";
+      if (stayPointKeys.has(key)) return "stay";
+      if (scenicPointKeys.has(key)) return "scenic";
+      return "scenic";
+    }
+
+    function mapNodeIcon(key, index, total, compact) {
+      const kind = markerKind(key, index, total);
+      const size = compact ? 24 : 30;
+      const label = pointLabels[key] || key;
+      return L.divIcon({
+        className: `map-node ${compact ? "compact" : ""}`,
+        html: `<span class="map-node-icon ${kind}" style="width:${size}px;height:${size}px">${svgIcon(kind)}</span><span class="map-node-label">${label}</span>`,
+        iconSize: [size, size],
+        iconAnchor: [size / 2, size],
+        popupAnchor: [0, -size]
+      });
+    }
+
+    function addMarkers(group, day, compact) {
+      const keys = dayPointKeys(day);
+      keys.forEach((key, index) => {
+        const coord = coordFor(key);
+        if (!coord) return;
+        const marker = L.marker(coord, {
+          icon: mapNodeIcon(key, index, keys.length, compact),
+          zIndexOffset: index === 0 || index === keys.length - 1 ? 600 : 500
+        }).addTo(group);
+        marker.bindPopup(`<b>${pointLabels[key] || key}</b><br><small>${day}</small>`);
+      });
+    }
+
+    function renderDayMap() {
+      if (!window.L) return;
+      if (!dayMap) dayMap = createBaseMap("dayMap", false);
+      if (dayLayerGroup) dayLayerGroup.remove();
+      dayLayerGroup = L.layerGroup().addTo(dayMap);
+      const route = addRoute(dayMap, dayLayerGroup, currentDay, false);
+      addMarkers(dayLayerGroup, currentDay, false);
+      const bounds = route.length ? route : dayPointKeys(currentDay).map(coordFor).filter(Boolean);
+      if (bounds.length > 1) dayMap.fitBounds(bounds, { padding: [28, 28], maxZoom: 9 });
+      else if (bounds.length === 1) dayMap.setView(bounds[0], 11);
+      setTimeout(() => dayMap.invalidateSize(), 80);
+    }
+
+    function renderOverviewMap() {
+      if (!window.L) return;
+      if (!overviewMap) overviewMap = createBaseMap("overviewMap", true);
+      if (overviewLayerGroup) overviewLayerGroup.remove();
+      overviewLayerGroup = L.layerGroup().addTo(overviewMap);
+      const all = [];
+      order.slice(1).forEach((day) => {
+        const route = addRoute(overviewMap, overviewLayerGroup, day, true);
+        route.forEach((point) => all.push(point));
+        addMarkers(overviewLayerGroup, day, true);
+      });
+      if (all.length) overviewMap.fitBounds(all, { padding: [22, 22] });
+      setTimeout(() => overviewMap.invalidateSize(), 80);
+    }
+
+    function renderDateRail() {
+      const days = getDays();
+      const rail = document.getElementById("dateRail");
+      rail.innerHTML = order.map((key) => `
+        <button class="date-button ${key === currentDay ? "active" : ""}" type="button" data-day="${key}" aria-label="${days[key].label} ${days[key].date}">
+          <span>${key}</span><b>${days[key].date}</b><i></i>
+        </button>`).join("");
+      rail.querySelectorAll("[data-day]").forEach((button) => {
+        button.addEventListener("click", () => selectDay(button.dataset.day));
+      });
+    }
+
+    function selectDay(day) {
+      currentDay = day;
+      renderDateRail();
+      renderToday();
+      const active = document.querySelector(`.date-button[data-day="${day}"]`);
+      active?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+
+    function renderToday() {
+      const day = getDays()[currentDay];
+      document.getElementById("todayLabel").textContent = `${day.weekday} · ${day.label}`;
+      document.getElementById("dayTitle").textContent = day.title;
+      document.getElementById("dayDistance").innerHTML = `${day.distance}<br>${day.time}`;
+      document.getElementById("daySummary").textContent = day.summary;
+      document.getElementById("mapBadge").textContent = `${currentDay} · ${day.places[0]} → ${day.places[day.places.length - 1]}`;
+      document.getElementById("stayName").textContent = day.stay;
+      document.getElementById("stayStatus").textContent = day.stayStatus;
+      document.getElementById("routeStops").innerHTML = day.places.map((place, index) => `
+        <li class="route-stop">
+          <span class="stop-icon"><i data-lucide="${index === day.places.length - 1 ? "flag" : "map-pin"}"></i></span>
+          <div><b>${place}</b><span>${index === 0 ? "出发" : index === day.places.length - 1 ? "今日终点" : "途中停留"}</span></div>
+        </li>`).join("");
+
+      const index = order.indexOf(currentDay);
+      const nextKey = order[index + 1];
+      const next = document.getElementById("nextPreview");
+      if (nextKey) {
+        const nextDay = getDays()[nextKey];
+        next.innerHTML = `
+          <p class="section-label">下一天</p>
+          <button type="button" data-next-day="${nextKey}">
+            <span class="next-date">${nextDay.date}<br>${nextKey}</span>
+            <span><b>${nextDay.title}</b><span>住：${nextDay.stay}</span></span>
+            <i data-lucide="chevron-right"></i>
+          </button>`;
+        next.querySelector("button").addEventListener("click", () => selectDay(nextKey));
+      } else {
+        next.innerHTML = "";
+      }
+      renderDayMap();
+      refreshIcons();
+    }
+
+    function renderTrip() {
+      const days = getDays();
+      const overviewCopy = {
+        a: "Plan A 经库尔德宁串联喀拉峻，路线相对顺畅。",
+        b: "Plan B 用那拉提替换库尔德宁，D5转场强度更高。",
+        c: "Plan C 用于7月13日独库封路，先走赛里木湖，再从伊犁河谷反向回奎屯。"
       };
-      const allBounds = [];
-      const coordinate = {};
-      Object.entries(data.points).forEach(([key, point]) => {
-        coordinate[key] = gcj02ToWgs84(point.lon, point.lat);
-      });
-
-      const routeLayers = {};
-      data.days.forEach((day) => {
-        const casings = [];
-        const routes = [];
-        const dayBounds = [];
-        day.legs.forEach((leg) => {
-          const webRoute = leg.webRoute || {};
-          const isRealRoad = webRoute.status === "real-road" && webRoute.polyline?.length;
-          const latlngs = isRealRoad
-            ? webRoute.polyline.map(([lon, lat]) => gcj02ToWgs84(lon, lat))
-            : [coordinate[leg.from], coordinate[leg.to]].filter(Boolean);
-          latlngs.forEach((latlng) => {
-            allBounds.push(latlng);
-            dayBounds.push(latlng);
-          });
-          const casing = L.polyline(latlngs, {
-            color: "#fffdf8",
-            weight: isRealRoad ? 8 : 7,
-            opacity: .82,
-            dashArray: isRealRoad ? null : "7 9",
-            lineCap: "round",
-            lineJoin: "round"
-          }).addTo(map);
-          const route = L.polyline(latlngs, {
-            color: colors[day.day],
-            weight: isRealRoad ? 4 : 3,
-            opacity: isRealRoad ? .94 : .7,
-            dashArray: isRealRoad ? null : "7 9",
-            lineCap: "round",
-            lineJoin: "round"
-          }).bindPopup(
-            `<b>${day.day} · ${day.title}</b><span>${leg.distanceKm} 公里（高德 MCP）${isRealRoad ? "<br>真实道路轨迹" : "<br>当前封路，开放后重新生成"}</span>`
-          ).addTo(map);
-          casings.push(casing);
-          routes.push(route);
-        });
-        routeLayers[day.day] = { casings, routes, latlngs: dayBounds };
-      });
-
-      const pointDays = {};
-      data.days.forEach((day) => {
-        day.points.forEach((key) => {
-          pointDays[key] = pointDays[key] ? `${pointDays[key]} / ${day.day}` : day.day;
+      const planNotes = {
+        a: "<b>Plan A · 未约到那拉提自驾票</b>D4新源前往库尔德宁，D5经喀拉峻住特克斯。独库或伊昭封路时另启Plan C。",
+        b: "<b>Plan B · 已约到7月14日那拉提自驾票</b>D4游那拉提并优先住那拉提镇，D5早起转场喀拉峻，不再前往库尔德宁。",
+        c: "<b>Plan C · 7月13日独库封路</b>D2改住精河，D3先走赛里木湖，D5-D7经昭苏、特克斯到那拉提，D8视独库恢复情况返奎屯。"
+      };
+      document.getElementById("overviewSubtitle").textContent = overviewCopy[currentPlan];
+      document.getElementById("planNote").innerHTML = planNotes[currentPlan];
+      document.getElementById("allDays").innerHTML = order.map((key) => {
+        const day = days[key];
+        return `<button class="day-row" type="button" data-overview-day="${key}">
+          <span class="day-no">${key}<br>${day.date}</span>
+          <span><b>${day.title}</b><span>${day.places.join(" · ")}<br>住：${day.stay}</span></span>
+          <i data-lucide="chevron-right"></i>
+        </button>`;
+      }).join("");
+      document.querySelectorAll("[data-overview-day]").forEach((button) => {
+        button.addEventListener("click", () => {
+          currentDay = button.dataset.overviewDay;
+          switchView("today");
+          renderDateRail();
+          renderToday();
+          openDetail();
         });
       });
-      Object.entries(data.points).forEach(([key, point]) => {
-        if (!coordinate[key]) return;
-        const overnight = stays.has(key);
-        const marker = L.circleMarker(coordinate[key], {
-          radius: overnight ? 8 : 6,
-          color: overnight ? "#22313a" : "#fffdf8",
-          weight: overnight ? 3 : 2,
-          fillColor: overnight ? "#f4c15d" : "#167b75",
-          fillOpacity: 1
-        }).addTo(map);
-        marker.bindPopup(
-          `<b>${displayNames[key] || point.name}</b><span>${point.name}<br>${pointDays[key] || ""}${point.address ? `<br>${point.address}` : ""}</span>`
-        );
-        if (overnight || ["qiaoerma", "mengket", "xiata", "sayram"].includes(key)) {
-          marker.bindTooltip(displayNames[key] || point.name, {
-            permanent: true,
-            direction: "top",
-            offset: [0, -8],
-            className: "route-label"
-          });
+      renderOverviewMap();
+      refreshIcons();
+    }
+
+    function openDetail() {
+      const day = getDays()[currentDay];
+      document.getElementById("detailTitle").textContent = `${day.date} · ${day.title}`;
+      document.getElementById("detailSubtitle").textContent = `${day.weekday} · ${day.label} · 住宿：${day.stay}`;
+      document.getElementById("detailMetrics").innerHTML = `<span>${day.distance}</span><span>${day.time}</span><span>${day.stayStatus}</span>`;
+      document.getElementById("segmentList").innerHTML = day.segments.map(([title, meta]) => `<li><b>${title}</b><span>${meta}</span></li>`).join("");
+      document.getElementById("detailNote").textContent = day.note;
+      document.getElementById("detailSheet").classList.add("open");
+      document.getElementById("sheetBackdrop").classList.add("open");
+      document.body.style.overflow = "hidden";
+      refreshIcons();
+    }
+
+    function closeDetail() {
+      document.getElementById("detailSheet").classList.remove("open");
+      document.getElementById("sheetBackdrop").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function switchView(view) {
+      currentView = view;
+      document.querySelectorAll("[data-view]").forEach((section) => { section.hidden = section.dataset.view !== view; });
+      document.querySelectorAll("[data-nav]").forEach((button) => button.classList.toggle("active", button.dataset.nav === view));
+      window.scrollTo({ top: 0, behavior: "instant" });
+      if (view === "today") renderToday();
+      if (view === "trip") renderTrip();
+      refreshIcons();
+    }
+
+    function updatePlanUI() {
+      document.getElementById("currentPlanLabel").textContent = `Plan ${currentPlan.toUpperCase()}`;
+      document.querySelectorAll("[data-plan-card]").forEach((card) => {
+        const selected = card.dataset.planCard === currentPlan;
+        card.classList.toggle("selected", selected);
+        const button = card.querySelector("[data-select-plan]");
+        if (button) {
+          button.classList.toggle("current", selected);
+          button.textContent = selected ? "当前使用中" : `选择 Plan ${card.dataset.planCard.toUpperCase()}`;
         }
       });
+    }
 
-      const legend = L.control({ position: "bottomleft" });
-      legend.onAdd = () => {
-        const div = L.DomUtil.create("div", "map-legend");
-        div.innerHTML = `<b>每日路线 · 点击筛选</b><button type="button" class="active" data-map-day="all"><i style="background:#22313a"></i>全部路线</button>${Object.entries(colors).map(([day, color]) => `<button type="button" data-map-day="${day}"><i style="background:${color}"></i>${day}</button>`).join("")}`;
-        L.DomEvent.disableClickPropagation(div);
-        div.addEventListener("click", (event) => {
-          const button = event.target.closest("[data-map-day]");
-          if (!button) return;
-          const selected = button.dataset.mapDay;
-          div.querySelectorAll("[data-map-day]").forEach((item) => {
-            item.classList.toggle("active", item === button);
-            item.classList.toggle("muted", selected !== "all" && item.dataset.mapDay !== selected);
-          });
-          Object.entries(routeLayers).forEach(([day, layers]) => {
-            const visible = selected === "all" || selected === day;
-            layers.casings.forEach((layer) => visible ? layer.addTo(map) : map.removeLayer(layer));
-            layers.routes.forEach((layer) => visible ? layer.addTo(map) : map.removeLayer(layer));
-          });
-          if (selected === "all") {
-            map.fitBounds(allBounds, { padding: [35, 35] });
-          } else {
-            map.fitBounds(routeLayers[selected].latlngs, { padding: [60, 60], maxZoom: 9 });
-          }
+    function openPlans() {
+      updatePlanUI();
+      document.getElementById("planOverlay").hidden = false;
+      document.body.style.overflow = "hidden";
+      refreshIcons();
+    }
+
+    function closePlans() {
+      document.getElementById("planOverlay").hidden = true;
+      document.body.style.overflow = "";
+      localStorage.setItem(planSeenKey, "true");
+    }
+
+    function selectPlan(plan) {
+      currentPlan = plan;
+      localStorage.setItem("xinjiang-current-plan", currentPlan);
+      updatePlanUI();
+      renderDateRail();
+      if (currentView === "today") renderToday();
+      if (currentView === "trip") renderTrip();
+      closePlans();
+    }
+
+    const checklistGroups = [
+      ["证件与订单", [["id","身份证原件"],["license","驾驶证、租车订单与保险"],["hotel","酒店订单与联系电话"],["flight","机票、航站楼和行李额度"],["border","昭苏／夏塔边防政策确认"]]],
+      ["预约与路况", [["duku","独库公路预约及截图"],["nalati","那拉提自驾票预约结果"],["xiata","夏塔门票与区间车"],["kalajun","喀拉峻门票和开放线路"],["sayram","赛里木湖自驾票"],["offline","高德离线地图"]]],
+      ["衣物与设备", [["jacket","冲锋衣或薄羽绒服"],["shoes","防滑徒步鞋与备用袜子"],["sun","防晒霜、帽子、墨镜和冰袖"],["rain","便携雨具"],["charger","车载充电器与充电线"],["powerbank","充电宝和手机支架"]]],
+      ["车辆、补给与药品", [["carcheck","轮胎、备胎、刹车和玻璃水"],["photos","取车车况照片与视频"],["water","饮用水、保温杯和路餐"],["medicine","感冒、肠胃、晕车与止痛药"],["firstaid","创可贴、湿巾和小型急救包"],["contacts","租车、酒店和保险救援电话"]]]
+    ];
+    const checklistKey = "xinjiang-mobile-packing-v2";
+
+    function readChecklist() {
+      try { return JSON.parse(localStorage.getItem(checklistKey)) || {}; }
+      catch { return {}; }
+    }
+
+    function renderChecklist() {
+      const state = readChecklist();
+      document.getElementById("checklist").innerHTML = checklistGroups.map(([group, items]) => `
+        <section class="check-group"><h3>${group}</h3><div class="check-list">
+          ${items.map(([key, label]) => `<label class="check-item"><input type="checkbox" data-check="${key}" ${state[key] ? "checked" : ""}><span>${label}</span></label>`).join("")}
+        </div></section>`).join("");
+      document.querySelectorAll("[data-check]").forEach((input) => {
+        input.addEventListener("change", () => {
+          const nextState = readChecklist();
+          nextState[input.dataset.check] = input.checked;
+          localStorage.setItem(checklistKey, JSON.stringify(nextState));
+          updateProgress();
         });
-        return div;
-      };
-      legend.addTo(map);
-      map.fitBounds(allBounds, { padding: [35, 35] });
-      window.setTimeout(() => map.invalidateSize(), 200);
-      window.setTimeout(() => map.invalidateSize(), 900);
-      window.addEventListener("resize", () => map.invalidateSize());
+      });
+      updateProgress();
     }
 
-    function renderAmapGeoMap(data) {
-      const svg = document.getElementById("routeMap");
-      const order = [
-        "hotel", "baili", "anjihai", "kuitun", "qiaoerma", "mengket",
-        "xinyuan", "kuerdening", "kalajun", "tekesi", "xiata", "zhaosu",
-        "yining", "sayram", "jinghe", "airport"
-      ];
-      if (!order.every((key) => data.points[key])) return;
-
-      const labels = {
-        hotel: "乌鲁木齐", baili: "百里丹霞", anjihai: "安集海", kuitun: "奎屯",
-        qiaoerma: "乔尔玛", mengket: "孟克特", xinyuan: "新源",
-        kuerdening: "库尔德宁", kalajun: "喀拉峻", tekesi: "特克斯",
-        xiata: "夏塔", zhaosu: "昭苏", yining: "伊宁",
-        sayram: "赛里木湖", jinghe: "精河", airport: "天山机场"
-      };
-      const offsets = {
-        hotel: [12, -13], baili: [-30, 28], anjihai: [-22, 28], kuitun: [12, -13],
-        qiaoerma: [-54, -14], mengket: [-52, 28], xinyuan: [12, 25],
-        kuerdening: [12, 26], kalajun: [-45, 28], tekesi: [12, -13],
-        xiata: [-34, 28], zhaosu: [12, -13], yining: [12, -13],
-        sayram: [12, -13], jinghe: [-40, -14], airport: [-72, 28]
-      };
-      const points = order.map((key) => data.points[key]);
-      const lons = points.map((point) => point.lon);
-      const lats = points.map((point) => point.lat);
-      const minLon = Math.min(...lons);
-      const maxLon = Math.max(...lons);
-      const minLat = Math.min(...lats);
-      const maxLat = Math.max(...lats);
-      const width = 820;
-      const height = 600;
-      const padding = 58;
-      const scale = Math.min(
-        (width - padding * 2) / (maxLon - minLon),
-        (height - padding * 2) / (maxLat - minLat)
-      );
-      const routeWidth = (maxLon - minLon) * scale;
-      const routeHeight = (maxLat - minLat) * scale;
-      const offsetX = (width - routeWidth) / 2;
-      const offsetY = (height - routeHeight) / 2;
-      const projected = {};
-      order.forEach((key) => {
-        const point = data.points[key];
-        projected[key] = {
-          x: offsetX + (point.lon - minLon) * scale,
-          y: offsetY + (maxLat - point.lat) * scale
-        };
-      });
-
-      const namespace = "http://www.w3.org/2000/svg";
-      svg.replaceChildren();
-      const background = document.createElementNS(namespace, "rect");
-      background.setAttribute("width", String(width));
-      background.setAttribute("height", String(height));
-      background.setAttribute("fill", "#fffaf1");
-      svg.appendChild(background);
-
-      const region = document.createElementNS(namespace, "rect");
-      region.setAttribute("x", "35");
-      region.setAttribute("y", String(Math.max(70, offsetY - 72)));
-      region.setAttribute("width", "750");
-      region.setAttribute("height", String(Math.min(440, routeHeight + 144)));
-      region.setAttribute("rx", "80");
-      region.setAttribute("fill", "#eef2e5");
-      svg.appendChild(region);
-
-      const pointString = order.map((key) => `${projected[key].x},${projected[key].y}`).join(" ");
-      const back = document.createElementNS(namespace, "polyline");
-      back.setAttribute("points", pointString);
-      back.setAttribute("class", "route-back");
-      svg.appendChild(back);
-      const line = document.createElementNS(namespace, "polyline");
-      line.setAttribute("points", pointString);
-      line.setAttribute("class", "route-main");
-      svg.appendChild(line);
-
-      order.forEach((key) => {
-        const group = document.createElementNS(namespace, "g");
-        group.setAttribute("class", "route-node");
-        group.setAttribute("transform", `translate(${projected[key].x} ${projected[key].y})`);
-        const circle = document.createElementNS(namespace, "circle");
-        circle.setAttribute("r", "10");
-        const text = document.createElementNS(namespace, "text");
-        const [dx, dy] = offsets[key];
-        text.setAttribute("x", String(dx));
-        text.setAttribute("y", String(dy));
-        text.textContent = labels[key];
-        group.append(circle, text);
-        svg.appendChild(group);
-      });
+    function updateProgress() {
+      const inputs = [...document.querySelectorAll("[data-check]")];
+      const done = inputs.filter((input) => input.checked).length;
+      const percent = inputs.length ? Math.round(done / inputs.length * 100) : 0;
+      document.getElementById("progressRing").style.setProperty("--progress", `${percent}%`);
+      document.getElementById("progressNumber").textContent = `${percent}%`;
+      document.getElementById("progressHint").textContent = percent === 100
+        ? "全部准备完成，出发前再核对路况。"
+        : `已完成 ${done} / ${inputs.length} 项，优先处理证件和预约。`;
     }
 
-    renderAmapData();
+    function refreshIcons() {
+      if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+    }
+
+    document.querySelectorAll("[data-nav]").forEach((button) => {
+      button.addEventListener("click", () => switchView(button.dataset.nav));
+    });
+    document.getElementById("openPlans").addEventListener("click", openPlans);
+    document.getElementById("closePlans").addEventListener("click", closePlans);
+    document.querySelectorAll("[data-select-plan]").forEach((button) => {
+      button.addEventListener("click", () => selectPlan(button.dataset.selectPlan));
+    });
+    document.getElementById("openDetail").addEventListener("click", openDetail);
+    document.getElementById("closeDetail").addEventListener("click", closeDetail);
+    document.getElementById("sheetBackdrop").addEventListener("click", closeDetail);
+    document.getElementById("openAmap").addEventListener("click", () => {
+      const uri = window.AMAP_ROUTE_DATA?.personalMapUri;
+      if (uri) window.location.href = uri;
+      else alert("当前没有可用的高德行程链接。");
+    });
+    document.getElementById("resetChecklist").addEventListener("click", () => {
+      if (!window.confirm("确定清空全部勾选记录吗？")) return;
+      localStorage.removeItem(checklistKey);
+      renderChecklist();
+    });
+
+    updatePlanUI();
+    renderDateRail();
+    renderToday();
+    renderChecklist();
+    refreshIcons();
+    if (!localStorage.getItem(planSeenKey)) openPlans();
   </script>
 </body>
 </html>
