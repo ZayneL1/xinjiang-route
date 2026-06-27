@@ -689,37 +689,26 @@
       </div>
       <div class="plan-options">
         <article class="plan-card" data-plan-card="a">
-          <div class="plan-card-head"><h3>Plan A｜库尔德宁线</h3><span class="tag">常规方案</span></div>
-          <p>未约到那拉提自驾票时采用，路线衔接更顺，D5驾驶压力相对较小。</p>
+          <div class="plan-card-head"><h3>Plan A｜喀拉峻夏塔线</h3><span class="tag">常规方案</span></div>
+          <p>独库正常开放时采用，不去库尔德宁和那拉提，喀拉峻、夏塔、玉湖、伊宁和赛里木湖节奏更清晰。</p>
           <ul class="plan-facts">
-            <li><b>启用条件</b><span>未约到7月14日那拉提自驾票</span></li>
-            <li><b>D4</b><span>新源 → 库尔德宁，住景区附近</span></li>
-            <li><b>D5</b><span>库尔德宁 → 喀拉峻 → 特克斯</span></li>
-            <li><b>主要特点</b><span>保留库尔德宁，转场相对顺畅</span></li>
+            <li><b>启用条件</b><span>7月13日独库北段正常开放</span></li>
+            <li><b>D4</b><span>新源 → 喀拉峻 → 特克斯</span></li>
+            <li><b>D5-D6</b><span>特克斯 → 夏塔 → 昭苏玉湖 → 伊宁</span></li>
+            <li><b>D7-D8</b><span>伊宁 → 薰衣草园 → 果子沟民宿 → 赛里木湖 → 精河</span></li>
           </ul>
           <button class="select-plan" type="button" data-select-plan="a">选择 Plan A</button>
         </article>
         <article class="plan-card" data-plan-card="b">
-          <div class="plan-card-head"><h3>Plan B｜那拉提线</h3><span class="tag">预约分支</span></div>
-          <p>成功预约那拉提自驾票后采用，用那拉提替换库尔德宁，草原体验更集中。</p>
-          <ul class="plan-facts">
-            <li><b>启用条件</b><span>约到7月14日那拉提自驾票</span></li>
-            <li><b>D4</b><span>新源 → 那拉提，优先住那拉提镇</span></li>
-            <li><b>D5</b><span>那拉提 → 喀拉峻 → 特克斯</span></li>
-            <li><b>主要特点</b><span>D5约267公里转场，驾驶强度更高</span></li>
-          </ul>
-          <button class="select-plan" type="button" data-select-plan="b">选择 Plan B</button>
-        </article>
-        <article class="plan-card" data-plan-card="c">
-          <div class="plan-card-head"><h3>Plan C｜独库封路反走线</h3><span class="tag pending">应急方案</span></div>
-          <p>7月13日独库北段封路时采用，D2直接住精河，先走赛里木湖，再从伊犁河谷反向回奎屯。</p>
+          <div class="plan-card-head"><h3>Plan B｜独库封路反走线</h3><span class="tag pending">应急方案</span></div>
+          <p>7月13日独库北段封路时采用，保留Plan A核心点位，按精河、赛湖、伊宁、昭苏、特克斯、新源方向反走。</p>
           <ul class="plan-facts">
             <li><b>启用条件</b><span>7月13日独库北段封路，无法从奎屯穿越乔尔玛</span></li>
-            <li><b>D2-D4</b><span>乌鲁木齐 → 精河 → 赛里木湖 → 伊宁</span></li>
-            <li><b>D5-D7</b><span>伊宁 → 昭苏夏塔 → 特克斯喀拉峻 → 那拉提</span></li>
-            <li><b>D8-D9</b><span>那拉提上午游览，下午经独库方向返奎屯，再回乌鲁木齐</span></li>
+            <li><b>D2-D4</b><span>乌鲁木齐 → 精河 → 赛里木湖 → 果子沟民宿 → 薰衣草园 → 伊宁</span></li>
+            <li><b>D5-D7</b><span>伊宁 → 伊昭公路 → 昭苏玉湖 → 夏塔 → 特克斯喀拉峻 → 新源</span></li>
+            <li><b>D8-D9</b><span>新源经孟克特、唐布拉、乔尔玛和独库北段返奎屯，再回乌鲁木齐</span></li>
           </ul>
-          <button class="select-plan" type="button" data-select-plan="c">选择 Plan C</button>
+          <button class="select-plan" type="button" data-select-plan="b">选择 Plan B</button>
         </article>
       </div>
       <p class="plan-footnote">选择结果会保存在当前浏览器中。之后点击页面顶部的“当前方案”即可随时切换。</p>
@@ -742,8 +731,9 @@
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script src="amap-route-data.js"></script>
   <script>
-    const NALATI = { name: "那拉提游客中心", lon: 84.029772, lat: 43.319864 };
     const LAVENDER = { name: "解忧公主薰衣草园", lon: 80.75656, lat: 44.169989 };
+    const YUHU = { name: "昭苏玉湖景区", lon: 81.0565, lat: 42.733584 };
+    const YISHE = { name: "怡舍人家民宿", lon: 80.954069, lat: 44.3275 };
     const dayColors = {
       D1: "#17745f", D2: "#bd5b47", D3: "#d19a37", D4: "#477e56",
       D5: "#17745f", D6: "#76658d", D7: "#3577a6", D8: "#28879a", D9: "#555d58"
@@ -787,7 +777,7 @@
         title: "独库北段与孟克特",
         summary: "早进独库，经乔尔玛进入唐布拉和孟克特，晚上长距离转场到新源。",
         places: ["奎屯", "独库起点", "乔尔玛", "唐布拉", "孟克特", "新源"],
-        stay: "新源县城", stayStatus: "待订",
+        stay: "一刻云舍民宿", stayStatus: "已订",
         distance: "430-480 km", time: "高强度日",
         segments: [
           ["奎屯 → 独库公路起点", "约20-30公里 · 建议06:30前后出发"],
@@ -795,55 +785,53 @@
           ["乔尔玛 → 唐布拉核心路段", "约40-60公里 · 边走边停1.5-2小时"],
           ["唐布拉 → 孟克特入口", "约50-80公里 · 约1.5-2小时"],
           ["孟克特游览", "建议3-4小时 · 车辆限制以现场为准"],
-          ["孟克特 → 新源县城", "约160-200公里 · 约3.5-4.5小时"]
+          ["孟克特 → 一刻云舍民宿", "约160-200公里 · 约3.5-4.5小时"]
         ],
         note: "这是全程压力最大的一天。最晚17:00左右离开孟克特，更晚则考虑就近住宿，避免疲劳夜驾。"
       },
       D6: {
         date: "7/16", weekday: "周四", label: "Day 6",
-        title: "特克斯直达夏塔",
-        summary: "早上从特克斯直接前往夏塔，留足时间看雪山古道，傍晚转宿昭苏。",
-        places: ["特克斯", "昭苏", "夏塔", "昭苏"],
-        stay: "昭苏县城", stayStatus: "待订",
-        distance: "250-280 km", time: "驾驶 4.5-5.5 h",
+        title: "昭苏玉湖与伊昭公路",
+        summary: "上午游昭苏玉湖，下午走伊昭公路到伊宁，晚上住伊宁。",
+        places: ["昭苏", "昭苏玉湖", "伊昭公路", "伊宁"],
+        stay: "伊宁市", stayStatus: "待订",
+        distance: "230-280 km", time: "驾驶 5-6 h",
         segments: [
-          ["特克斯 → 昭苏县", "约115-125公里 · 约2-2.5小时"],
-          ["昭苏县 → 夏塔", "约70-80公里 · 约1-1.5小时"],
-          ["夏塔游览", "区间车、将军桥、鲜花台及冰川观景方向"],
-          ["夏塔 → 昭苏县", "约70-80公里 · 约1-1.5小时"]
+          ["昭苏县城 → 昭苏玉湖", "约70-90公里 · 约1.5-2小时"],
+          ["昭苏玉湖游览", "建议2-3小时 · 以天气、路况和景区开放为准"],
+          ["昭苏玉湖 → 昭苏县城", "约70-90公里 · 约1.5-2小时"],
+          ["昭苏 → 伊昭公路 → 伊宁", "约150-180公里 · 约3.5-4.5小时"]
         ],
-        note: "建议提前购票并午前入园。向冰川方向徒步时，必须按景区末班车时间提前折返。"
+        note: "当天兼顾玉湖和伊昭公路，玉湖不要拖到下午太晚；进入伊昭前在昭苏补油。"
       },
       D7: {
         date: "7/17", weekday: "周五", label: "Day 7",
-        title: "伊昭公路到伊宁",
-        summary: "从昭苏翻越伊昭公路，下午逛喀赞其，傍晚在六星街吃饭。",
-        places: ["昭苏", "伊昭公路", "喀赞其", "六星街", "伊宁"],
-        stay: "伊宁市", stayStatus: "待订",
-        distance: "150-180 km", time: "驾驶 3.5-4.5 h",
+        title: "伊宁与薰衣草花园",
+        summary: "白天逛伊宁，下午顺路去薰衣草花园，晚上住果子沟牧场怡舍人家民宿。",
+        places: ["伊宁", "喀赞其", "六星街", "解忧公主薰衣草园", "怡舍人家民宿"],
+        stay: "怡舍人家民宿", stayStatus: "待订",
+        distance: "120-160 km", time: "驾驶 2.5-3.5 h",
         segments: [
-          ["昭苏 → 伊昭公路南口", "约10-20公里 · 约20-30分钟"],
-          ["伊昭南口 → 达坂 → 北侧出口", "约110-130公里 · 纯驾驶约3小时"],
-          ["伊昭出口 → 伊宁市区", "约20-35公里 · 约30-50分钟"],
-          ["喀赞其 → 六星街", "市区游览 · 下午至晚间"]
+          ["伊宁市区游览", "喀赞其、六星街和市区美食，节奏放松"],
+          ["伊宁 → 解忧公主薰衣草园", "高德测距约58公里 · 约1小时10分钟"],
+          ["薰衣草园打卡", "建议45-75分钟 · 7月中旬以园区晚花和现场状态为准"],
+          ["薰衣草园 → 怡舍人家民宿", "约45-65公里 · 约1-1.5小时"]
         ],
-        note: "伊昭公路受天气影响较大。进入山区前加满油，遇临时封闭立即按Plan C绕行。"
+        note: "怡舍人家民宿地址：伊犁哈萨克自治州霍城县果子沟牧场朝阳北路62号1栋1楼。"
       },
       D8: {
         date: "7/18", weekday: "周六", label: "Day 8",
-        title: "薰衣草与赛里木湖",
-        summary: "早离伊宁，先顺路打卡解忧公主薰衣草园，再经果子沟进入赛里木湖环湖，傍晚前往精河。",
-        places: ["伊宁", "解忧公主薰衣草园", "果子沟", "赛里木湖", "精河"],
+        title: "赛里木湖全天",
+        summary: "从果子沟牧场民宿出发，全天留给赛里木湖环湖和停留，晚上前往精河。",
+        places: ["怡舍人家民宿", "果子沟", "赛里木湖", "精河"],
         stay: "精河县城", stayStatus: "待订",
-        distance: "380-430 km", time: "驾驶 6-7 h",
+        distance: "220-270 km", time: "驾驶 3.5-4.5 h",
         segments: [
-          ["伊宁 → 解忧公主薰衣草园", "高德测距约58公里 · 约1小时10分钟"],
-          ["薰衣草园打卡", "建议45-75分钟 · 7月中旬以园区晚花和现场状态为准"],
-          ["薰衣草园 → 果子沟 → 赛里木湖入口", "约95-110公里 · 约1.5-2小时"],
-          ["赛里木湖环湖", "约90公里 · 含停留建议4-6小时"],
+          ["怡舍人家民宿 → 赛里木湖入口", "约60-90公里 · 约1-1.5小时"],
+          ["赛里木湖全天环湖", "约90公里 · 含停留建议6-8小时"],
           ["赛湖东侧出口 → 精河", "高德测距约140公里 · 约1小时40分钟"]
         ],
-        note: "薰衣草园只作为顺路打卡，不建议久留。当晚还需前往精河，建议最晚18:00驶离赛里木湖景区。"
+        note: "这天把赛里木湖作为全天重点。仍建议在日落前后离开景区，避免夜间赶往精河。"
       },
       D9: {
         date: "7/19", weekday: "周日", label: "Day 9",
@@ -865,65 +853,36 @@
       a: {
         D4: {
           date: "7/14", weekday: "周二", label: "Day 4",
-          title: "新源到库尔德宁",
-          summary: "上午经巩留转场，下午游览雪岭云杉、山谷草甸与河谷森林。",
-          places: ["新源", "巩留", "库尔德宁"],
-          stay: "库尔德宁景区附近", stayStatus: "待订",
-          distance: "150-180 km", time: "驾驶 3-4 h",
+          title: "新源到喀拉峻",
+          summary: "从新源直接前往喀拉峻，全天集中游草原，晚上住特克斯。",
+          places: ["新源", "巩留", "喀拉峻", "特克斯"],
+          stay: "特克斯县城", stayStatus: "待订",
+          distance: "220-280 km", time: "驾驶 4.5-5.5 h",
           segments: [
             ["新源县 → 巩留县", "约90-110公里 · 约1.5-2小时"],
-            ["巩留县 → 库尔德宁", "约55-70公里 · 约1-1.5小时"],
-            ["库尔德宁景区", "下午安排4-5小时 · 云杉、草甸与河谷森林"]
+            ["巩留县 → 喀拉峻入口", "约120-150公里 · 约2.5-3小时"],
+            ["喀拉峻全天游览", "优先东西喀拉峻草原线，按区间车末班时间折返"],
+            ["喀拉峻入口 → 特克斯", "约30-40公里 · 约45-60分钟"]
           ],
-          note: "住宿尽量选择景区入口或库尔德宁镇附近，并提前确认停车和晚餐条件。"
+          note: "这天不去库尔德宁。喀拉峻范围很大，建议只选重点线路，不购买无法完成的全域组合。"
         },
         D5: {
           date: "7/15", weekday: "周三", label: "Day 5",
-          title: "库尔德宁到喀拉峻",
-          summary: "从库尔德宁前往喀拉峻，下午集中游草原，傍晚进入特克斯八卦城。",
-          places: ["库尔德宁", "巩留", "喀拉峻", "特克斯"],
-          stay: "特克斯县城", stayStatus: "待订",
-          distance: "210-260 km", time: "驾驶 4.5-5.5 h",
+          title: "特克斯出发夏塔",
+          summary: "一早从特克斯出发直奔夏塔，留足时间看雪山古道，夜宿昭苏。",
+          places: ["特克斯", "昭苏", "夏塔", "昭苏"],
+          stay: "昭苏县城", stayStatus: "待订",
+          distance: "250-280 km", time: "驾驶 4.5-5.5 h",
           segments: [
-            ["库尔德宁 → 巩留县", "约55-70公里 · 约1-1.5小时"],
-            ["巩留县 → 喀拉峻入口", "约120-150公里 · 约2.5-3小时"],
-            ["东西喀拉峻草原线", "半日选择一条主线，不求全部覆盖"],
-            ["喀拉峻入口 → 特克斯", "约30-40公里 · 约45-60分钟"]
+            ["特克斯 → 昭苏县", "约115-125公里 · 约2-2.5小时"],
+            ["昭苏县 → 夏塔", "约70-80公里 · 约1-1.5小时"],
+            ["夏塔游览", "区间车、将军桥、鲜花台及冰川观景方向"],
+            ["夏塔 → 昭苏县", "约70-80公里 · 约1-1.5小时"]
           ],
-          note: "半日只走一条主线，不同时安排阔克苏大峡谷全线，优先保证傍晚抵达特克斯。"
+          note: "建议07:30前后从特克斯出发，提前购票并午前入园。向冰川方向徒步时按末班车时间折返。"
         }
       },
       b: {
-        D4: {
-          date: "7/14", weekday: "周二", label: "Day 4",
-          title: "那拉提自驾游览",
-          summary: "从新源前往那拉提，按预约线路自驾游览草原，晚上优先住那拉提镇。",
-          places: ["新源", "那拉提游客中心", "那拉提草原"],
-          stay: "那拉提镇", stayStatus: "首选",
-          distance: "约 70 km", time: "单程 1 h 20 min",
-          segments: [
-            ["新源县城 → 那拉提游客中心", "高德规划约70公里 · 约1小时19分钟"],
-            ["那拉提景区自驾", "按预约时段、允许线路及当天交通组织游览"],
-            ["景区 → 那拉提镇住宿", "优先就近入住，减少次日重复车程"]
-          ],
-          note: "Plan B以成功预约7月14日自驾票为前提。若返回新源住宿，D5需至少提前1-1.5小时出发。"
-        },
-        D5: {
-          date: "7/15", weekday: "周三", label: "Day 5",
-          title: "那拉提到喀拉峻",
-          summary: "早离那拉提，长距离转场至喀拉峻，下午选择重点线路，晚上住特克斯。",
-          places: ["那拉提", "喀拉峻", "特克斯"],
-          stay: "特克斯县城", stayStatus: "待订",
-          distance: "约 267+ km", time: "转场约 4 h 40 min",
-          segments: [
-            ["那拉提 → 喀拉峻核心区域", "高德规划约267公里 · 约4小时40分钟"],
-            ["喀拉峻重点线路", "中午前后抵达，根据时间选择东西喀拉峻重点"],
-            ["喀拉峻 → 特克斯", "结束游览后进入县城住宿"]
-          ],
-          note: "这是Plan B的关键长途日，建议07:00左右出发。中午后才抵达时主动缩短景区线路。"
-        }
-      },
-      c: {
         D2: {
           date: "7/12", weekday: "周日", label: "Day 2",
           title: "S101丹霞到精河",
@@ -937,94 +896,98 @@
             ["百里丹霞 → 安集海", "约260-320公里 · 约4.5-5.5小时 · 放弃肯斯瓦特"],
             ["安集海 → 精河县城", "高德测距约229公里 · 约2小时40分钟"]
           ],
-          note: "Plan C启用后D2不再住奎屯，肯斯瓦特直接取消，目标是把D3留给赛里木湖和伊宁。"
+          note: "Plan B启用后D2不再住奎屯，肯斯瓦特直接取消，目标是把D3留给赛里木湖和伊宁。"
         },
         D3: {
           date: "7/13", weekday: "周一", label: "Day 3",
-          title: "赛里木湖到伊宁",
-          summary: "独库封路日不硬闯，先从精河进入赛里木湖环湖，下午经果子沟到伊宁。",
-          places: ["精河", "赛里木湖", "果子沟", "伊宁"],
-          stay: "伊宁市", stayStatus: "待订",
-          distance: "280-320 km", time: "驾驶 4-5 h",
+          title: "赛里木湖到果子沟",
+          summary: "独库封路日不硬闯，先从精河进入赛里木湖，全天环湖后住果子沟牧场民宿。",
+          places: ["精河", "赛里木湖", "果子沟", "怡舍人家民宿"],
+          stay: "怡舍人家民宿", stayStatus: "待订",
+          distance: "190-240 km", time: "驾驶 3-4 h",
           segments: [
             ["精河 → 赛里木湖东门", "高德测距约133公里 · 约1小时40分钟"],
-            ["赛里木湖环湖", "约90公里 · 含停留建议4-6小时"],
-            ["赛里木湖 → 果子沟 → 伊宁", "高德测距约142公里 · 约2小时20分钟"]
+            ["赛里木湖全天环湖", "约90公里 · 含停留建议6-8小时"],
+            ["赛里木湖 → 怡舍人家民宿", "约60-90公里 · 约1-1.5小时"]
           ],
-          note: "这天的核心是把赛里木湖提前完成。若D2到精河太晚，D3减少环湖停留，优先保证抵达伊宁。"
+          note: "这天对应Plan A的D8反向走法，把赛里木湖作为全天重点，晚上住果子沟附近，避免继续赶到伊宁。"
         },
         D4: {
           date: "7/14", weekday: "周二", label: "Day 4",
-          title: "伊宁城市缓冲",
-          summary: "在伊宁休整，上午可补觉或逛喀赞其，下午六星街和市区美食。",
-          places: ["伊宁", "喀赞其", "六星街", "伊宁"],
+          title: "薰衣草花园与伊宁",
+          summary: "从果子沟民宿出发，顺路打卡薰衣草花园，下午和晚上逛伊宁。",
+          places: ["怡舍人家民宿", "解忧公主薰衣草园", "伊宁", "喀赞其", "六星街"],
           stay: "伊宁市", stayStatus: "待订",
-          distance: "市区交通", time: "轻松日",
+          distance: "120-160 km", time: "驾驶 2.5-3.5 h",
           segments: [
-            ["上午", "补觉、洗衣、车辆检查，给后续山路留体力"],
-            ["喀赞其民俗区", "半日市区游览，按体力选择深度"],
-            ["六星街", "傍晚至晚间用餐和散步"]
+            ["怡舍人家民宿 → 解忧公主薰衣草园", "约45-65公里 · 约1-1.5小时"],
+            ["薰衣草园打卡", "建议45-75分钟 · 7月中旬以园区晚花和现场状态为准"],
+            ["薰衣草园 → 伊宁", "高德测距约58公里 · 约1小时10分钟"],
+            ["伊宁市区游览", "喀赞其、六星街和市区美食，节奏放松"]
           ],
-          note: "Plan C把伊宁作为缓冲点，抵消D2长途转场的疲劳，也为D5伊昭方向留出机动。"
+          note: "这天对应Plan A的D7反向走法。下午尽量留在伊宁市区休整，为次日伊昭和玉湖保存体力。"
         },
         D5: {
           date: "7/15", weekday: "周三", label: "Day 5",
-          title: "伊宁到昭苏夏塔",
-          summary: "从伊宁经伊昭方向到昭苏，直奔夏塔游览，晚上住昭苏。",
-          places: ["伊宁", "昭苏", "夏塔", "昭苏"],
+          title: "伊昭公路与昭苏玉湖",
+          summary: "从伊宁经伊昭公路到昭苏，下午游昭苏玉湖，晚上住昭苏。",
+          places: ["伊宁", "伊昭公路", "昭苏", "昭苏玉湖"],
           stay: "昭苏县城", stayStatus: "待订",
-          distance: "300-340 km", time: "驾驶 5-6 h",
+          distance: "230-280 km", time: "驾驶 5-6 h",
           segments: [
             ["伊宁 → 昭苏", "约150-180公里 · 约3.5-4.5小时 · 走伊昭需看开放状态"],
-            ["昭苏 → 夏塔", "约70-80公里 · 约1-1.5小时"],
-            ["夏塔游览", "区间车、将军桥、鲜花台及冰川观景方向"],
-            ["夏塔 → 昭苏县", "约70-80公里 · 约1-1.5小时"]
+            ["昭苏县城 → 昭苏玉湖", "约70-90公里 · 约1.5-2小时"],
+            ["昭苏玉湖游览", "建议2-3小时 · 以天气、路况和景区开放为准"],
+            ["昭苏玉湖 → 昭苏县城", "约70-90公里 · 约1.5-2小时"]
           ],
-          note: "若伊昭公路也封闭，Plan C还需要二次调整为高速绕行或压缩夏塔。"
+          note: "这天对应Plan A的D6反向走法。若伊昭公路也封闭，Plan B需要二次调整为高速绕行或压缩玉湖。"
         },
         D6: {
           date: "7/16", weekday: "周四", label: "Day 6",
-          title: "特克斯与喀拉峻",
-          summary: "昭苏出发到特克斯，上午转场，下午游喀拉峻草原，晚上住特克斯。",
-          places: ["昭苏", "特克斯", "喀拉峻", "特克斯"],
+          title: "夏塔到特克斯",
+          summary: "昭苏出发先去夏塔，游雪山古道后转场到特克斯住宿。",
+          places: ["昭苏", "夏塔", "特克斯"],
           stay: "特克斯县城", stayStatus: "待订",
-          distance: "170-220 km", time: "驾驶 3.5-4.5 h",
+          distance: "250-280 km", time: "驾驶 4.5-5.5 h",
           segments: [
-            ["昭苏 → 特克斯", "高德测距约63公里 · 约1小时"],
-            ["特克斯 → 喀拉峻入口", "高德测距约46公里 · 约1小时10分钟"],
-            ["喀拉峻重点线路", "下午选择东西喀拉峻或草原重点，不强求全覆盖"],
-            ["喀拉峻 → 特克斯", "结束后返回县城住宿"]
+            ["昭苏县 → 夏塔", "约70-80公里 · 约1-1.5小时"],
+            ["夏塔游览", "区间车、将军桥、鲜花台及冰川观景方向"],
+            ["夏塔 → 昭苏县", "约70-80公里 · 约1-1.5小时"],
+            ["昭苏 → 特克斯", "约115-125公里 · 约2-2.5小时"]
           ],
-          note: "这天比Plan A顺序更轻，适合把喀拉峻作为半日重点，晚上保留八卦城散步时间。"
+          note: "这天对应Plan A的D5反向走法。夏塔要尽量午前入园，离园后再去特克斯，避免夜间山路赶路。"
         },
         D7: {
           date: "7/17", weekday: "周五", label: "Day 7",
-          title: "特克斯到那拉提",
-          summary: "从特克斯出发，目标中午前后抵达那拉提，下午根据票务和体力轻量游览。",
-          places: ["特克斯", "那拉提"],
-          stay: "那拉提镇", stayStatus: "待订",
-          distance: "约 218 km", time: "驾驶约 3 h 40 min",
+          title: "喀拉峻到新源",
+          summary: "从特克斯进入喀拉峻，游草原后经巩留方向转场到新源。",
+          places: ["特克斯", "喀拉峻", "巩留", "新源"],
+          stay: "新源县城", stayStatus: "待订",
+          distance: "220-280 km", time: "驾驶 4.5-5.5 h",
           segments: [
-            ["特克斯 → 那拉提游客中心", "高德测距约218公里 · 约3小时40分钟"],
-            ["那拉提镇入住/午餐", "中午前后抵达后先休整"],
-            ["那拉提轻量游览", "下午只安排一条主线或镇区周边，避免过度拉满"]
+            ["特克斯 → 喀拉峻入口", "约30-40公里 · 约45-60分钟"],
+            ["喀拉峻重点线路", "优先东西喀拉峻草原线，按区间车末班时间折返"],
+            ["喀拉峻入口 → 巩留", "约120-150公里 · 约2.5-3小时"],
+            ["巩留 → 新源", "约80-100公里 · 约1.5小时"],
+            ["新源补给休整", "检查车辆、加满油，确认次日独库北段恢复情况"]
           ],
-          note: "如果D8计划走独库返奎屯，D7尽量住那拉提镇，减少次日重复车程。"
+          note: "这天对应Plan A的D4反向走法。喀拉峻范围很大，只选重点线路，晚上必须推进到新源。"
         },
         D8: {
           date: "7/18", weekday: "周六", label: "Day 8",
-          title: "那拉提反穿到奎屯",
-          summary: "上午逛那拉提，午后出发走独库方向，经乔尔玛、独山子方向抵达奎屯。",
-          places: ["那拉提", "乔尔玛", "独库北段", "奎屯"],
+          title: "孟克特与独库反穿",
+          summary: "从新源出发，经孟克特、唐布拉和乔尔玛，反穿独库北段到奎屯。",
+          places: ["新源", "孟克特", "唐布拉", "乔尔玛", "独库北段", "奎屯"],
           stay: "奎屯市", stayStatus: "待订",
-          distance: "300-360 km", time: "驾驶 6-8 h",
+          distance: "430-480 km", time: "高强度日",
           segments: [
-            ["那拉提上午游览", "控制在半日内，午前后必须开始转场"],
-            ["那拉提 → 乔尔玛", "约150-180公里 · 山路约3-4小时，以实时路况为准"],
+            ["新源 → 孟克特入口", "约160-200公里 · 约3.5-4.5小时"],
+            ["孟克特/唐布拉游览", "按开放状态和到达时间选择重点停留"],
+            ["唐布拉 → 乔尔玛", "约50-80公里 · 约1.5-2小时"],
             ["乔尔玛 → 独库北段 → 奎屯", "约150-180公里 · 山路约3-4小时"],
             ["奎屯入住", "抵达后补给、休息，为D9返程留余量"]
           ],
-          note: "此日假设独库在7月18日前恢复通行；若仍封闭，必须改走G218/G30高速绕回奎屯或直接压缩返程。"
+          note: "这天对应Plan A的D3反向走法，强度很高。若独库仍封闭，必须改走G218/G30绕行或直接向乌鲁木齐方向回撤。"
         },
         D9: {
           date: "7/19", weekday: "周日", label: "Day 9",
@@ -1048,26 +1011,29 @@
       D1: ["hotel"],
       D2: ["hotel", "baili", "kensiwate", "anjihai", "kuitun"],
       D3: ["kuitun", "duku", "qiaoerma", "tangbula", "mengket", "xinyuan"],
-      D4: ["xinyuan", "kuerdening"],
-      D5: ["kuerdening", "kalajun", "tekesi"],
-      D6: ["tekesi", "xiata", "zhaosu"],
-      D7: ["zhaosu", "yining"],
-      D8: ["yining", "lavender", "sayram", "jinghe"],
+      D4: ["xinyuan", "kalajun", "tekesi"],
+      D5: ["tekesi", "xiata", "zhaosu"],
+      D6: ["zhaosu", "yuhu", "yining"],
+      D7: ["yining", "lavender", "yishe"],
+      D8: ["yishe", "sayram", "jinghe"],
       D9: ["jinghe", "airport"]
     };
     const planMapPointKeys = {
-      b: {
-        D4: ["xinyuan", "nalati"],
-        D5: ["nalati", "kalajun", "tekesi"]
+      a: {
+        D4: ["xinyuan", "kalajun", "tekesi"],
+        D5: ["tekesi", "xiata", "zhaosu"],
+        D6: ["zhaosu", "yuhu", "yining"],
+        D7: ["yining", "lavender", "yishe"],
+        D8: ["yishe", "sayram", "jinghe"]
       },
-      c: {
+      b: {
         D2: ["hotel", "baili", "anjihai", "jinghe"],
-        D3: ["jinghe", "sayram", "yining"],
-        D4: ["yining"],
-        D5: ["yining", "zhaosu", "xiata", "zhaosu"],
-        D6: ["zhaosu", "tekesi", "kalajun", "tekesi"],
-        D7: ["tekesi", "nalati"],
-        D8: ["nalati", "qiaoerma", "duku", "kuitun"],
+        D3: ["jinghe", "sayram", "yishe"],
+        D4: ["yishe", "lavender", "yining"],
+        D5: ["yining", "zhaosu", "yuhu", "zhaosu"],
+        D6: ["zhaosu", "xiata", "tekesi"],
+        D7: ["tekesi", "kalajun", "xinyuan"],
+        D8: ["xinyuan", "mengket", "tangbula", "qiaoerma", "duku", "kuitun"],
         D9: ["kuitun", "airport"]
       }
     };
@@ -1076,13 +1042,22 @@
       kuitun: "奎屯", duku: "独库起点", qiaoerma: "乔尔玛", tangbula: "唐布拉",
       mengket: "孟克特", xinyuan: "新源", kuerdening: "库尔德宁", kalajun: "喀拉峻",
       tekesi: "特克斯", xiata: "夏塔", zhaosu: "昭苏", yining: "伊宁",
-      sayram: "赛里木湖", jinghe: "精河", airport: "天山机场", nalati: "那拉提",
-      lavender: "薰衣草园"
+      sayram: "赛里木湖", jinghe: "精河", airport: "天山机场",
+      lavender: "薰衣草园", yuhu: "昭苏玉湖", yishe: "怡舍人家"
     };
-    const stayPointKeys = new Set(["hotel", "kuitun", "xinyuan", "kuerdening", "tekesi", "zhaosu", "yining", "jinghe", "nalati"]);
-    const scenicPointKeys = new Set(["baili", "kensiwate", "anjihai", "duku", "qiaoerma", "tangbula", "mengket", "kuerdening", "kalajun", "xiata", "sayram", "nalati", "lavender"]);
+    const stayPointKeys = new Set(["hotel", "kuitun", "xinyuan", "kuerdening", "tekesi", "zhaosu", "yining", "jinghe", "yishe"]);
+    const scenicPointKeys = new Set(["baili", "kensiwate", "anjihai", "duku", "qiaoerma", "tangbula", "mengket", "kuerdening", "kalajun", "xiata", "sayram", "lavender", "yuhu"]);
 
+    const validPlans = new Set(["a", "b"]);
     let currentPlan = localStorage.getItem("xinjiang-current-plan") || "a";
+    if (currentPlan === "c") {
+      currentPlan = "b";
+      localStorage.setItem("xinjiang-current-plan", currentPlan);
+    }
+    if (!validPlans.has(currentPlan)) {
+      currentPlan = "a";
+      localStorage.setItem("xinjiang-current-plan", currentPlan);
+    }
     let currentDay = "D1";
     let currentView = "today";
     let dayMap;
@@ -1100,8 +1075,9 @@
     }
 
     function coordFor(key) {
-      if (key === "nalati") return amapLatLng(NALATI.lon, NALATI.lat);
       if (key === "lavender") return amapLatLng(LAVENDER.lon, LAVENDER.lat);
+      if (key === "yuhu") return amapLatLng(YUHU.lon, YUHU.lat);
+      if (key === "yishe") return amapLatLng(YISHE.lon, YISHE.lat);
       const point = window.AMAP_ROUTE_DATA?.points?.[key];
       return point ? amapLatLng(point.lon, point.lat) : null;
     }
@@ -1283,14 +1259,12 @@
     function renderTrip() {
       const days = getDays();
       const overviewCopy = {
-        a: "Plan A 经库尔德宁串联喀拉峻，路线相对顺畅。",
-        b: "Plan B 用那拉提替换库尔德宁，D5转场强度更高。",
-        c: "Plan C 用于7月13日独库封路，先走赛里木湖，再从伊犁河谷反向回奎屯。"
+        a: "Plan A 不去库尔德宁和那拉提，喀拉峻、夏塔、玉湖、伊宁和赛里木湖节奏更清晰。",
+        b: "Plan B 用于7月13日独库封路，保留同样核心点位，按赛湖、伊宁、昭苏、特克斯、新源方向反走。"
       };
       const planNotes = {
-        a: "<b>Plan A · 未约到那拉提自驾票</b>D4新源前往库尔德宁，D5经喀拉峻住特克斯。独库或伊昭封路时另启Plan C。",
-        b: "<b>Plan B · 已约到7月14日那拉提自驾票</b>D4游那拉提并优先住那拉提镇，D5早起转场喀拉峻，不再前往库尔德宁。",
-        c: "<b>Plan C · 7月13日独库封路</b>D2改住精河，D3先走赛里木湖，D5-D7经昭苏、特克斯到那拉提，D8视独库恢复情况返奎屯。"
+        a: "<b>Plan A · 喀拉峻夏塔线</b>D4新源直达喀拉峻并住特克斯，D5夏塔住昭苏，D6玉湖和伊昭到伊宁，D7住果子沟民宿，D8全天赛里木湖。",
+        b: "<b>Plan B · 反向同点位</b>D3赛里木湖住果子沟，D4薰衣草和伊宁，D5玉湖，D6夏塔，D7喀拉峻到新源，D8视独库恢复情况返奎屯。"
       };
       document.getElementById("overviewSubtitle").textContent = overviewCopy[currentPlan];
       document.getElementById("planNote").innerHTML = planNotes[currentPlan];
@@ -1371,6 +1345,7 @@
     }
 
     function selectPlan(plan) {
+      if (!validPlans.has(plan)) plan = "a";
       currentPlan = plan;
       localStorage.setItem("xinjiang-current-plan", currentPlan);
       updatePlanUI();
@@ -1382,7 +1357,7 @@
 
     const checklistGroups = [
       ["证件与订单", [["id","身份证原件"],["license","驾驶证、租车订单与保险"],["hotel","酒店订单与联系电话"],["flight","机票、航站楼和行李额度"],["border","昭苏／夏塔边防政策确认"]]],
-      ["预约与路况", [["duku","独库公路预约及截图"],["nalati","那拉提自驾票预约结果"],["xiata","夏塔门票与区间车"],["kalajun","喀拉峻门票和开放线路"],["sayram","赛里木湖自驾票"],["offline","高德离线地图"]]],
+      ["预约与路况", [["duku","独库公路预约及截图"],["xiata","夏塔门票与区间车"],["kalajun","喀拉峻门票和开放线路"],["sayram","赛里木湖自驾票"],["offline","高德离线地图"]]],
       ["衣物与设备", [["jacket","冲锋衣或薄羽绒服"],["shoes","防滑徒步鞋与备用袜子"],["sun","防晒霜、帽子、墨镜和冰袖"],["rain","便携雨具"],["charger","车载充电器与充电线"],["powerbank","充电宝和手机支架"]]],
       ["车辆、补给与药品", [["carcheck","轮胎、备胎、刹车和玻璃水"],["photos","取车车况照片与视频"],["water","饮用水、保温杯和路餐"],["medicine","感冒、肠胃、晕车与止痛药"],["firstaid","创可贴、湿巾和小型急救包"],["contacts","租车、酒店和保险救援电话"]]]
     ];
